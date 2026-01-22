@@ -12,6 +12,11 @@ class HTTPClientConfig(BaseModel):
         return str(self.url)        # pydantic.HttpUrl автоматически добавляет завершающий /
 
 
+class UserData(BaseModel):
+    username: str
+    password: str
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         extra='allow',
@@ -19,6 +24,7 @@ class Settings(BaseSettings):
         env_file_encoding='utf-8',
         env_nested_delimiter='.')
 
+    user_data: UserData
     http_client: HTTPClientConfig
     allure_results_dir: DirectoryPath
 

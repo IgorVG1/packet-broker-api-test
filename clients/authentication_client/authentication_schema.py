@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from config import settings
+
 
 class UserSchema(BaseModel):
     """
@@ -25,8 +27,8 @@ class LoginRequestSchema(BaseModel):
         username: str
         password: str
     """
-    username: str   = Field(default='admin')
-    password: str   = Field(default='Admin2012')
+    username: str   = Field(default=settings.user_data.username)
+    password: str   = Field(default=settings.user_data.password)
 
 
 class LoginResponseSchema(BaseModel):
