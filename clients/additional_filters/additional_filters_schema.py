@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict, RootModel
 from typing import List
+from tools.fakers import fake
 
 
 class CreateAdditionalFiltersSchema(BaseModel):
@@ -13,10 +14,10 @@ class CreateAdditionalFiltersSchema(BaseModel):
     """
     model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
 
-    direction: str
-    group_id: str   = Field(alias="groupId", serialization_alias="groupId")
-    ip: str
-    type: str
+    direction: str  = Field(default="Src+Dst")
+    group_id: str   = Field(alias="groupId", serialization_alias="groupId", default="1")
+    ip: str         = Field(default_factory=fake.ip)
+    type: str       = Field(default="pass")
 
 
 class CreateAdditionalFiltersRequestSchema(RootModel):
@@ -72,9 +73,9 @@ class UpdateAdditionalFiltersRequestSchema(BaseModel):
     """
     model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
 
-    logic_id: str                   = Field(alias="logicId", serialization_alias="logicId")
-    filter_ip_white_enable: bool    = Field(alias="filterIPWhiteEnable", serialization_alias="filterIPWhiteEnable")
-    filter_ip_black_enable: bool    = Field(alias="filterIPBlackEnable", serialization_alias="filterIPBlackEnable")
+    logic_id: str                   = Field(alias="logicId", serialization_alias="logicId", default='1')
+    filter_ip_white_enable: bool    = Field(alias="filterIPWhiteEnable", serialization_alias="filterIPWhiteEnable", default_factory=fake.boolean)
+    filter_ip_black_enable: bool    = Field(alias="filterIPBlackEnable", serialization_alias="filterIPBlackEnable", default_factory=fake.boolean)
 
 
 class UpdateAdditionalFiltersResponseSchema(BaseModel):
