@@ -5,6 +5,7 @@ from clients.additional_filters.additional_filters_schema import CreateAdditiona
 from clients.api_client import APIClient
 from clients.private_http_builder import AuthenticationUserSchema, get_private_http_client
 from tools.routes import APIRoutes
+from clients.api_coverage import tracker
 
 
 class AdditionalFiltersClient(APIClient):
@@ -12,6 +13,7 @@ class AdditionalFiltersClient(APIClient):
     Клиент для работы с /api/additional_filters/
     """
     @allure.step('Create additional filters')
+    @tracker.track_coverage_httpx(f'{APIRoutes.ADDITIONAL_FILTERS}')
     def create_additional_filters_api(self, request: CreateAdditionalFiltersRequestSchema) -> Response:
         """
         Метод создает дополнительные фильтры.
@@ -25,6 +27,7 @@ class AdditionalFiltersClient(APIClient):
 
 
     @allure.step('Update additional filters')
+    @tracker.track_coverage_httpx(f'{APIRoutes.ADDITIONAL_FILTERS}')
     def update_additional_filters_api(self, request: UpdateAdditionalFiltersRequestSchema) -> Response:
         """
         Метод сохраняет дополнительный фильтр.
@@ -37,6 +40,7 @@ class AdditionalFiltersClient(APIClient):
 
 
     @allure.step('Delete additional filters')
+    @tracker.track_coverage_httpx(f'{APIRoutes.ADDITIONAL_FILTERS}')
     def delete_additional_filters_api(self, request: DeleteAdditionalFiltersRequestSchema) -> Response:
         """
         Метод удаляет дополнительные фильтры.

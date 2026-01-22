@@ -1,0 +1,3368 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Packet Broker 2 - OpenAPI Documentation",
+        "description": "Описание REST API Packet Broker 2",
+        "version": "v2.0.5s"
+    },
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Введите токен с префиксом \"Bearer\", например \"Bearer abcde12345\"."
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/api/": {
+            "get": {
+                "operationId": "api_list",
+                "description": "Получение списка путей REST API от сервера",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список возможных запросов для REST API"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/additional_filters/": {
+            "post": {
+                "operationId": "api_additional_filters_create",
+                "description": "Создание дополнительного фильтра",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "New Additional Filter",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressPort": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    },
+                                    "ip": {
+                                        "type": "string",
+                                        "example": "10.11.101.222"
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "example": "Src+Dst"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "miss"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Дополнительный фильтр успешно создан"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_additional_filters_update",
+                "description": "Сохранение дополнительного фильтра",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Save Additional Filter",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "string",
+                                    "example": "1/0"
+                                },
+                                "filterIPWhiteEnable": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "filterIPBlackEnable": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Дополнительный фильтр успешно сохранен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_additional_filters_delete",
+                "description": "Удаление дополнительного фильтра",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete Additional Filter",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "string",
+                                        "example": "10.11.101.222"
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "example": "Src+Dst"
+                                    },
+                                    "port_name": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "pass"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Дополнительный фильтр успешно сохранен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/port_status/": {
+            "put": {
+                "operationId": "api_toogle_port_status",
+                "description": "Изменение состояния порта",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Toogle port",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "string",
+                                    "example": "1/0"
+                                },
+                                "status": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Состояние порта успешно изменено"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/modules/": {
+            "get": {
+                "operationId": "api_get_inserted_modules_info",
+                "description": "Вывод списка подключенных модулей",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список возможных подключенных модулей",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "port": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "vendor": {
+                                        "type": "string",
+                                        "example": "Mellanox"
+                                    },
+                                    "partNumber": {
+                                        "type": "string",
+                                        "example": "XX-XXXX11-1X"
+                                    },
+                                    "rev": {
+                                        "type": "string",
+                                        "example": "A"
+                                    },
+                                    "serialNumber": {
+                                        "type": "string",
+                                        "example": "ABC123456789"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "1 April 2018"
+                                    },
+                                    "nominalBitratePerLine": {
+                                        "type": "string",
+                                        "example": "25500 MBps"
+                                    },
+                                    "OUI": {
+                                        "type": "string",
+                                        "example": "00:00:00"
+                                    },
+                                    "powerClass": {
+                                        "type": "string",
+                                        "example": "1 (1.5 W max.)"
+                                    },
+                                    "mediaType": {
+                                        "type": "string",
+                                        "example": "(Copper): 2 m"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/ports_all/": {
+            "get": {
+                "operationId": "api_get_all_ports",
+                "description": "Вывод списка всех доступных портов с информацией о модулях",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список портов успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/portsAll"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/balancing/": {
+            "get": {
+                "operationId": "api_balancing_list",
+                "description": "Получение списка сконфигурированных групп балансировки",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список групп балансировки",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/balanceGroup"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_balancing_create",
+                "description": "Конфигурирование группы балансировки",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Configure balance groups",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "logicId": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "balanceType": {
+                                    "type": "integer",
+                                    "example": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа балансировки успешно добавлена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_balancing_update",
+                "description": "Редактирование конфигурации группы балансировки",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Edit Balance Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "logicId": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "balanceType": {
+                                    "type": "integer",
+                                    "example": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа балансировки успешно изменена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_balancing_delete",
+                "description": "Удаление балансировки",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete balancing",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "logicGroup": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа балансировки успешно удалена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/custom_config/": {
+            "get": {
+                "operationId": "api_custom_config_download",
+                "description": "Скачивание текущей конфигурации в формате JSON файла",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурационный файл успешно сохранен"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_custom_config_create",
+                "description": "Загрузка на коммутатор пользовательского конфигурационного файла",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно применена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "В файле содержится неверная конфигурация"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_custom_config_update",
+                "description": "Сохранение текущей конфигурации коммутатора",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно сохранена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_custom_config_delete",
+                "description": "Применение сохраненной конфигурации",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Сохраненная конфигурация успешно применена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/default_config/": {
+            "delete": {
+                "operationId": "api_default_config_delete",
+                "description": "Сброс конфигурации до заводской",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно сброшена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/filters/": {
+            "get": {
+                "operationId": "api_filters_list",
+                "description": "Получение списка сконфигурированных фильтров",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список фильтров успешно получен",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "1": {
+                                    "type": "object",
+                                    "properties": {
+                                        "filters": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "logicGroup": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "filtrationType": {
+                                                        "type": "string",
+                                                        "example": "miss"
+                                                    },
+                                                    "ig_md.src_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "10.10.101.0"
+                                                            },
+                                                            "mask": {
+                                                                "type": "string",
+                                                                "example": "0xffffff00"
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.dst_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "1.1.1.1"
+                                                            },
+                                                            "mask": {
+                                                                "type": "string",
+                                                                "example": "0xffffffff"
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.ipv6_src_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "1::f"
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.ipv6_dst_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "1::f"
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.protocol": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "integer",
+                                                                "example": 17
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.next_hdr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "integer",
+                                                                "example": 17
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.src_port": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "integer",
+                                                                "example": 443
+                                                            }
+                                                        }
+                                                    },
+                                                    "ig_md.dst_port": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "integer",
+                                                                "example": 80
+                                                            }
+                                                        }
+                                                    },
+                                                    "vlans": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "vlan0": {
+                                                                "properties": {
+                                                                    "value": {
+                                                                        "type": "integer",
+                                                                        "example": 200
+                                                                    }
+                                                                }
+                                                            },
+                                                            "vlanLast": {
+                                                                "properties": {
+                                                                    "value": {
+                                                                        "type": "integer",
+                                                                        "example": 201
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "etherType": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "etherType": {
+                                                                "properties": {
+                                                                    "value": {
+                                                                        "type": "string",
+                                                                        "example": "0x0800"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "hdr.ethernet.src_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "11:11:11:11:11:11"
+                                                            }
+                                                        }
+                                                    },
+                                                    "hdr.ethernet.dst_addr": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "value": {
+                                                                "type": "string",
+                                                                "example": "22:22:22:22:22:22"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "additionalFiltrationType": {
+                                            "type": "string",
+                                            "example": "miss"
+                                        },
+                                        "additionalFiltrationTypeNew": {
+                                            "type": "string",
+                                            "example": "miss"
+                                        },
+                                        "blackIPFilters": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "string",
+                                                        "example": "1.1.1.1"
+                                                    },
+                                                    "direction": {
+                                                        "type": "string",
+                                                        "example": "Src+Dst"
+                                                    },
+                                                    "logicGroup": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "miss"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "whiteIPFilters": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "string",
+                                                        "example": "1.1.1.1"
+                                                    },
+                                                    "direction": {
+                                                        "type": "string",
+                                                        "example": "Src+Dst"
+                                                    },
+                                                    "logicGroup": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "miss"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_filters_create",
+                "description": "Добавление фильтра",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add Ternary Filter",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "filtrationType": {
+                                        "type": "string",
+                                        "example": "pass"
+                                    },
+                                    "logicGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "newIpDst": {
+                                        "type": "string",
+                                        "example": "11.11.11.222"
+                                    },
+                                    "newIpDstMask": {
+                                        "type": "integer",
+                                        "example": 32
+                                    },
+                                    "newIpSrc": {
+                                        "type": "string",
+                                        "example": "192.168.7.82"
+                                    },
+                                    "newIpSrcMask": {
+                                        "type": "integer",
+                                        "example": 32
+                                    },
+                                    "newIpv6Src": {
+                                        "type": "string",
+                                        "example": "1::f"
+                                    },
+                                    "newIpv6Dst": {
+                                        "type": "string",
+                                        "example": "1::f"
+                                    },
+                                    "newVlan0": {
+                                        "type": "integer",
+                                        "example": 22
+                                    },
+                                    "newVlanLast": {
+                                        "type": "integer",
+                                        "example": 14
+                                    },
+                                    "newIpProto": {
+                                        "type": "string",
+                                        "example": "6"
+                                    },
+                                    "newIpv6Proto": {
+                                        "type": "string",
+                                        "example": "b"
+                                    },
+                                    "newEtherType": {
+                                        "type": "string",
+                                        "example": "0x8847"
+                                    },
+                                    "newMacSrc": {
+                                        "type": "string",
+                                        "example": "001A3FF14CC6"
+                                    },
+                                    "newMacDst": {
+                                        "type": "string",
+                                        "example": "121314CCCCCC"
+                                    },
+                                    "newSrcPort": {
+                                        "type": "integer",
+                                        "example": 122
+                                    },
+                                    "newDstPort": {
+                                        "type": "integer",
+                                        "example": 80
+                                    },
+                                    "newTLSFiltrationMask": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "newTLSFiltration": {
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Фильтр успешно добавлен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_filters_delete",
+                "description": "Удаление фильтра",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete Ternary Filter",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "logicGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "filtrationType": {
+                                        "type": "string",
+                                        "example": "miss"
+                                    },
+                                    "ig_md.src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "10.10.101.0"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffff00"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1.1.1.1"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffffff"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.protocol": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 17
+                                            }
+                                        }
+                                    },
+                                    "ig_md.next_hdr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 17
+                                            }
+                                        }
+                                    },
+                                    "ig_md.src_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 443
+                                            }
+                                        }
+                                    },
+                                    "ig_md.dst_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 80
+                                            }
+                                        }
+                                    },
+                                    "vlans": {
+                                        "type": "object",
+                                        "properties": {
+                                            "vlan0": {
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    }
+                                                }
+                                            },
+                                            "vlanLast": {
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "integer",
+                                                        "example": 201
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "etherType": {
+                                        "type": "object",
+                                        "properties": {
+                                            "etherType": {
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "string",
+                                                        "example": "0x0800"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "hdr.ethernet.src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "11:11:11:11:11:11"
+                                            }
+                                        }
+                                    },
+                                    "hdr.ethernet.dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "22:22:22:22:22:22"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Фильтр успешно удален"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/all_filters/": {
+            "delete": {
+                "operationId": "all_filters_delete",
+                "description": "Очистка списка фильтраций",
+                "responses": {
+                    "200": {
+                        "description": "Все списки фильтрации успешно очищены"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/mirroring/": {
+            "get": {
+                "operationId": "api_mirroring_list",
+                "description": "Вывод списка групп зеркалирования",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/mirroring"
+                            }
+                        },
+                        "description": "Cписок групп зеркалирования успешно получен"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_mirroring_create",
+                "description": "Создание группы зеркалирования",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Create Mirror Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "mirroring-1"
+                                },
+                                "ingressGroup": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "2/0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа зеркалирования успешно создана"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_mirroring_update",
+                "description": "Изменение конфигурации группы зеркалирования",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Edit Mirror Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "mirroring-1"
+                                },
+                                "ingressGroup": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "2/0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация группы зеркалирования успешно изменена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_mirroring_delete",
+                "description": "Удаление группы зеркалирования",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete Mirror Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "mirroring-1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ingressGroup": {
+                                            "type": "string",
+                                            "example": "ingress-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа зеркалирования успешно удалена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/ports/": {
+            "get": {
+                "operationId": "api_ports_list",
+                "description": "Получение списка сконфигурированных портов и их настроек",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список сконфигурированных портов",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/port"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_ports_create",
+                "description": "Конфигурация нового порта",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add New Port",
+                        "schema": {
+                            "$ref": "#/definitions/port"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Порт успешно добавлен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_ports_update",
+                "description": "Обновление порта",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Update Port",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/port"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация портов успешно обновлена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "options": {
+                "operationId": "api_ports_variants",
+                "description": "Получение списка возможных портов",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список возможных портов",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "example": "1/0"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_ports_delete",
+                "description": "Удаление конфигурации порта",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Ports Array",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "1/0",
+                                "2/0"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Порт успешно удален"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/loopback_ports/": {
+            "get": {
+                "operationId": "api_get_loopback_ports_speed",
+                "description": "Получение ограничений скоростей loopback портов",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Ограничения скоростей loopback портов успешно получены",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "port": {
+                                        "type": "string",
+                                        "example": "L1"
+                                    },
+                                    "speedLimit": {
+                                        "type": "number",
+                                        "example": 1023.41
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_set_loopback_ports_speed",
+                "description": "Назначение ограничения скорости loopback портов",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Set loopback ports speed",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "port": {
+                                        "type": "string",
+                                        "example": "L1"
+                                    },
+                                    "speedLimit": {
+                                        "type": "number",
+                                        "example": 10000.25
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ограничение скорости loopback портов успешно сконфигурированно"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_delete_loopback_ports_speed",
+                "description": "Очистка ограничения скорости loopback портов",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Reset loopback ports speed",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "port": {
+                                        "type": "string",
+                                        "example": "L1"
+                                    },
+                                    "speedLimit": {
+                                        "type": "number",
+                                        "example": 10000.25
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ограничение скорости loopback портов успешно удалено"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/ingress_groups/": {
+            "get": {
+                "operationId": "api_ingress_group_get",
+                "description": "Вывод списка входных групп",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список входных групп успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ingressGroup"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_ingress_group_create",
+                "description": "Создание выходной группы",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Create Ingress Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "groupId": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "port": {
+                                                "type": "string",
+                                                "example": "1/0"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Входная группа успешно задана"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_ingress_group_delete",
+                "description": "Удаление входной группы",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete ingress group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "port": {
+                                                "type": "string",
+                                                "example": "1/0"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Входная группа успешно удалена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_ingress_group_update",
+                "description": "Update Ingress Group",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Update Ingress Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "groupId": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "port": {
+                                                "type": "string",
+                                                "example": "1/0"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация входной группы успешно обновлена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/get_cpu_port_dumps/": {
+            "get": {
+                "operationId": "api_cpu_port_dump",
+                "description": "Скачивание архива с дампом CPU-порта",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Архив успешно скачивается"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/nodes/": {
+            "get": {
+                "operationId": "api_nodes_config_download",
+                "description": "Получение текущей конфигурации коммутатора на Web",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно получена"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_node_config_save",
+                "description": "Сохранение текущей конфигурации c Web в базу данных",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно сохранена"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "options": {
+                "operationId": "api_node_config_enable",
+                "description": "Применение текущей конфигурации Web",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно применена"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_node_config_delete",
+                "description": "Очистка текущей конфигурации Web из базы данных",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Конфигурация успешно удалена"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/selections/": {
+            "get": {
+                "operationId": "api_selection_group_get",
+                "description": "Получение списка групп отбора",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "logicId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ipProtocol": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "dstPort": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "srcPort": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "matchPriority": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_selection_group_post",
+                "description": "Создание группы отбора",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Create Selection Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ingressId": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "logicId": {
+                                    "type": "string",
+                                    "example": "selection-1"
+                                },
+                                "selection": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ipProtocol": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "trafficType": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "srcPort": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "dstPort": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "matchPriority": {
+                                    "type": "integer",
+                                    "example": 0
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа отбора успешно сохранена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_delete_selection_group",
+                "description": "Удаление группы отбора",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete Selection Group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "ingressGroup": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "filter": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ipProtocol": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "srcPort": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "dstPort": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "trafficType": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "matchPriority": {
+                                    "type": "integer",
+                                    "example": 0
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Группа отбора успешно удалена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершении данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации группы отбора"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/egress_groups/": {
+            "get": {
+                "operationId": "api_egress_group_list",
+                "description": "Получение списка выходных групп",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список выходных групп успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "groupId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "logicGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ports": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "1/0"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_create_egress_group",
+                "description": "Добавление выходной группы",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add New Egress group",
+                        "schema": {
+                            "$ref": "#/definitions/egressGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Выходная группа успешно добавлена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации выходной группы"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_delete_egress_group",
+                "description": "Удаление выходной группы",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete egress group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "egress-1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "logicGroup": {
+                                            "type": "string",
+                                            "example": "selection-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Выходная группа успешно удалена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_update_egress_group",
+                "description": "Обновление выходной группы",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Update Egress group",
+                        "schema": {
+                            "$ref": "#/definitions/egressGroup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Выходная группа успешно обновлена"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/unknown/": {
+            "get": {
+                "operationId": "api_get_unknown_port_list",
+                "description": "Получение списка портов анализа",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список портов анализа успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "egressPort": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_create_unknown_port",
+                "description": "Добавление порта анализа",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add unknown port",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "unknown-1"
+                                },
+                                "ingressGroup": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Порт анализа успешно добавлен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_unknown_port_delete",
+                "description": "Удаление порта анализа",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete unknown group",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "unknown-1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "ingressGroup": {
+                                            "type": "string",
+                                            "example": "ingress-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Порт анализа успешно удален"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав для совершения данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "put": {
+                "operationId": "api_update_unknown_port",
+                "description": "Обновление порта анализа",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Update unknown port",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "unknown-1"
+                                },
+                                "ingressGroup": {
+                                    "type": "string",
+                                    "example": "ingress-1"
+                                },
+                                "ports": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Порт анализа успешно обновлен"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/psf_format/": {
+            "get": {
+                "operationId": "api_psf_rules_list",
+                "description": "Получение списка правил спецформата",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список правил спецформата успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "port": {
+                                        "type": "string",
+                                        "example": "1/0"
+                                    },
+                                    "dmac": {
+                                        "type": "string",
+                                        "example": "112233445566"
+                                    },
+                                    "lid": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "pid": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_add_psf_rule",
+                "description": "Добавление правила спецформата",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add PSF rule",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "string",
+                                    "example": "1/0"
+                                },
+                                "dmac": {
+                                    "type": "string",
+                                    "example": "112233445566"
+                                },
+                                "lid": {
+                                    "type": "string",
+                                    "example": "1"
+                                },
+                                "pid": {
+                                    "type": "string",
+                                    "example": "1"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Правило успешно добавлено"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершении данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_delete_psf_rule",
+                "description": "Удаление правила спецформата",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete PSF rule",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "example": "1/0"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Правило успешно удалено"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершении данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/psf_dmac/": {
+            "get": {
+                "operationId": "api_get_psf_dmac",
+                "description": "Получение dMAC для формата PSF",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "DMAC для формата PSF получен",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "dmac": {
+                                    "type": "string",
+                                    "example": "aa:bb:cc:dd:ee:ff"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "post": {
+                "operationId": "api_post_psf_dmac",
+                "description": "Конфигурирование dMAC для формата PSF",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add PSF dMAC",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "dmac": {
+                                    "type": "string",
+                                    "example": "aa:bb:cc:dd:ee:ff"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DMAC успешно сконфигурирован"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/mirror_filter/": {
+            "post": {
+                "operationId": "api_add_mirror_filter_rule",
+                "description": "Добавление правил фильтрации зеркалирования",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Add mirror filter rule",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "destNum": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "newIpv6Src": {
+                                        "type": "string",
+                                        "example": "1::f"
+                                    },
+                                    "newIpv6Dst": {
+                                        "type": "string",
+                                        "example": "1::f"
+                                    },
+                                    "newIpDst": {
+                                        "type": "string",
+                                        "example": "1.1.1.1"
+                                    },
+                                    "newIpDstMask": {
+                                        "type": "integer",
+                                        "example": 32
+                                    },
+                                    "newIpSrc": {
+                                        "type": "string",
+                                        "example": "1.1.1.1"
+                                    },
+                                    "newIpSrcMask": {
+                                        "type": "integer",
+                                        "example": 32
+                                    },
+                                    "newIpProto": {
+                                        "type": "string",
+                                        "example": "6"
+                                    },
+                                    "newIpv6Proto": {
+                                        "type": "string",
+                                        "example": "6"
+                                    },
+                                    "newSrcPort": {
+                                        "type": "string",
+                                        "example": "22"
+                                    },
+                                    "newDstPort": {
+                                        "type": "string",
+                                        "example": "33"
+                                    },
+                                    "newTrafficType": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Правила успешно добавлены"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершении данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_delete_mirror_filter_rule",
+                "description": "Удаление правила фильтрации зеркалирования",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Delete mirror filter rule",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "dest_num": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "ig_md.dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1.1.1.1"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffffff"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1.1.1.1"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffffff"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.src_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.dst_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.next_hdr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.protocol": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "trafficType": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Правило успешно удалено"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершении данной операции"
+                    },
+                    "412": {
+                        "description": "Ошибка в конфигурации"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/psf_mirror_filter/": {
+            "get": {
+                "operationId": "api_get_psf_mirror_filters",
+                "description": "Получение правил фильтрации зеркалирования PSF",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Список правил фильтрации зеркалирования успешно получен",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingressGroup": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "dest_num": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "ig_md.dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1.1.1.1"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffffff"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1.1.1.1"
+                                            },
+                                            "mask": {
+                                                "type": "string",
+                                                "example": "0xffffffff"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.src_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.dst_port": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_src_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.ipv6_dst_addr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "string",
+                                                "example": "1::f"
+                                            }
+                                        }
+                                    },
+                                    "ig_md.next_hdr": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "ig_md.protocol": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value": {
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        }
+                                    },
+                                    "trafficType": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/signal/": {
+            "get": {
+                "operationId": "api_ports_signal_level",
+                "description": "Получение уровня сигнала QSFP",
+                "parameters": [
+                    {
+                        "name": "port",
+                        "description": "Название порта (в кавычках)",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "\"1/0\""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Получение уровня сигнала"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            }
+        },
+        "/api/ports_statistics/": {
+            "get": {
+                "operationId": "api_ports_statistics_list",
+                "description": "Получение статистики пакетов с портов коммутатора",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Статистика портов"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "delete": {
+                "operationId": "api_ports_statistics_delete",
+                "description": "Сброс статистики пакетов с портов коммутатора",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Статистика портов"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет прав на совершение данного запроса"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/program_logs/": {
+            "get": {
+                "operationId": "api_program_logs_list",
+                "description": "Скачивание архива с логами Packet Broker",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Архив успешно скачивается"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/switch_info/": {
+            "get": {
+                "operationId": "api_switch_info_list",
+                "description": "Получение системной информации коммутатора",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "sn": {
+                                    "type": "string"
+                                },
+                                "uptime": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "example": "2023-09-22 10:06:16"
+                                },
+                                "packetBrokerVersion": {
+                                    "type": "string"
+                                },
+                                "packetBrokerWebServerVersion": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/token/access/": {
+            "post": {
+                "operationId": "api_token_access_create",
+                "description": "Войти в учетную запись и получить токен для доступа к ресурсам",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "name": "user",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "example": "user"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "1221"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Пользователь успешно вошел в учетную запись",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "access": {
+                                    "type": "string",
+                                    "example": "sfnanfDFlaqWFgethethdsE"
+                                },
+                                "refresh": {
+                                    "type": "string",
+                                    "example": "iqhHIKDFLlafjsklhgfposw"
+                                },
+                                "user": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "user"
+                                        },
+                                        "is_active": {
+                                            "type": "boolean"
+                                        },
+                                        "is_staff": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Не удалось выполнить запрос"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        },
+        "/api/token/both/": {
+            "post": {
+                "operationId": "api_token_both_create",
+                "description": "Obtain a new access and refresh tokens",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Get new token",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "refresh_token": {
+                                    "type": "string",
+                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Токены успешно обновлены",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "access": {
+                                    "type": "string",
+                                    "example": "sfnanfDFlaqWFgethethdsE"
+                                },
+                                "refresh": {
+                                    "type": "string",
+                                    "example": "iqhHIKDFLlafjsklhgfposw"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Не удалось выполнить запрос"
+                    }
+                },
+                "tags": [
+                    "api"
+                ]
+            },
+            "parameters": []
+        }
+    },
+    "definitions": {
+        "port": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "test_name"
+                },
+                "port": {
+                    "type": "string",
+                    "example": "1/0"
+                },
+                "speed": {
+                    "type": "string",
+                    "example": "BF_SPEED_100G"
+                },
+                "mtu": {
+                    "type": "integer",
+                    "example": 10240
+                },
+                "an": {
+                    "type": "string",
+                    "example": "PM_AN_FORCE_ENABLE"
+                },
+                "fec": {
+                    "type": "string",
+                    "example": "BF_FEC_TYP_NONE"
+                },
+                "dir": {
+                    "type": "string",
+                    "example": "PM_PORT_DIR_DEFAULT"
+                },
+                "speedLimit": {
+                    "type": "integer",
+                    "example": 102400
+                },
+                "loopback": {
+                    "type": "string",
+                    "example": "BF_LPBK_NONE"
+                },
+                "reservePort": {
+                    "type": "string",
+                    "example": "4/1"
+                },
+                "reservePortMode": {
+                    "type": "string",
+                    "example": "overflow"
+                },
+                "macDstEgress": {
+                    "type": "string",
+                    "example": "08bfb8003489"
+                }
+            }
+        },
+        "balanceGroup": {
+            "type": "object",
+            "properties": {
+                "logicId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "sel": {
+                    "type": "integer",
+                    "example": 4
+                }
+            }
+        },
+        "mirroring": {
+            "type": "object",
+            "properties": {
+                "mirrorId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "ingressId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "1/0"
+                    }
+                }
+            }
+        },
+        "ingressGroup": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "packetCounter": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "1/0"
+                    }
+                }
+            }
+        },
+        "deleteFilter": {
+            "type": "object",
+            "properties": {
+                "portName": {
+                    "type": "string",
+                    "example": "1/0"
+                },
+                "filtrationType": {
+                    "type": "string",
+                    "example": "miss"
+                },
+                "ig_md.src_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "10.10.101.0"
+                        },
+                        "mask": {
+                            "type": "string",
+                            "example": "0xffffff00"
+                        }
+                    }
+                },
+                "ig_md.dst_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "1.1.1.1"
+                        },
+                        "mask": {
+                            "type": "string",
+                            "example": "0xffffffff"
+                        }
+                    }
+                },
+                "ig_md.protocol": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "example": 17
+                        }
+                    }
+                },
+                "ig_md.src_port": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "example": 443
+                        }
+                    }
+                },
+                "ig_md.dst_port": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "example": 80
+                        }
+                    }
+                },
+                "mplsLabels": {
+                    "type": "object",
+                    "properties": {
+                        "mpls0": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 100
+                                }
+                            }
+                        },
+                        "mpls1": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 101
+                                }
+                            }
+                        },
+                        "mpls2": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 102
+                                }
+                            }
+                        },
+                        "mplsLast": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 103
+                                }
+                            }
+                        }
+                    }
+                },
+                "vlans": {
+                    "type": "object",
+                    "properties": {
+                        "vlan0": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 200
+                                }
+                            }
+                        },
+                        "vlanLast": {
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "example": 201
+                                }
+                            }
+                        }
+                    }
+                },
+                "etherType": {
+                    "type": "object",
+                    "properties": {
+                        "etherType": {
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "example": "0x0800"
+                                }
+                            }
+                        },
+                        "etherType2": {
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "example": "0x8800"
+                                }
+                            }
+                        }
+                    }
+                },
+                "hdr.ethernet.src_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "11:11:11:11:11:11"
+                        }
+                    }
+                },
+                "hdr.ethernet.dst_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "22:22:22:22:22:22"
+                        }
+                    }
+                },
+                "hdr.ethernet2.src_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "33:33:33:33:33:33"
+                        }
+                    }
+                },
+                "hdr.ethernet2.dst_addr": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "44:44:44:44:44:44"
+                        }
+                    }
+                }
+            }
+        },
+        "newFilter": {
+            "type": "object",
+            "properties": {
+                "filtrationType": {
+                    "type": "string",
+                    "example": "pass"
+                },
+                "ingressPort": {
+                    "type": "string",
+                    "example": "1/0"
+                },
+                "newIpDst": {
+                    "type": "string",
+                    "example": "11.11.11.222"
+                },
+                "newIpDstMask": {
+                    "type": "integer",
+                    "example": 32
+                },
+                "newIpSrc": {
+                    "type": "string",
+                    "example": "192.168.7.82"
+                },
+                "newIpSrcMask": {
+                    "type": "integer",
+                    "example": 32
+                },
+                "newMpls0": {
+                    "type": "integer",
+                    "example": 32
+                },
+                "newMpls1": {
+                    "type": "integer",
+                    "example": 12
+                },
+                "newMpls2": {
+                    "type": "integer",
+                    "example": 34
+                },
+                "newMplsLast": {
+                    "type": "integer",
+                    "example": 14
+                },
+                "newVlan0": {
+                    "type": "integer",
+                    "example": 22
+                },
+                "newVlanLast": {
+                    "type": "integer",
+                    "example": 14
+                },
+                "newIpProto": {
+                    "type": "string",
+                    "example": "0x11"
+                },
+                "newEtherType": {
+                    "type": "string",
+                    "example": "0x8847"
+                },
+                "newEtherType2": {
+                    "type": "string",
+                    "example": "0x8906"
+                },
+                "newMacSrc": {
+                    "type": "string",
+                    "example": "001A3FF14CC6"
+                },
+                "newMacDst": {
+                    "type": "string",
+                    "example": "121314CCCCCC"
+                },
+                "newMac2Src": {
+                    "type": "string",
+                    "example": "001122334455"
+                },
+                "newMac2Dst": {
+                    "type": "string",
+                    "example": "556677889911"
+                },
+                "newSrcPort": {
+                    "type": "integer",
+                    "example": 122
+                },
+                "newDstPort": {
+                    "type": "integer",
+                    "example": 80
+                }
+            }
+        },
+        "lane": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "port: 1, vendor: BIC, partNumber: Q28-100G-LR4-10, rev: 01, serialNumber: BX2304250093, date: 230506, nominalBitratePerLine: 25500 MBps, OUI: 00:00:00, powerClass: 6 (4.5 W max.), mediaType: (SMF): 10 km, rx: -17.72dBm, tx: -40.0dBm, ток смещения: 0.0mA"
+                },
+                "lane": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "speed": {
+                    "type": "string",
+                    "example": "100G"
+                },
+                "OUI": {
+                    "type": "string",
+                    "example": "00:00:00"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "06 May 2023"
+                },
+                "mediaType": {
+                    "type": "string",
+                    "example": "(SMF): 10 km"
+                },
+                "nominalBitratePerLine": {
+                    "type": "string",
+                    "example": "25500 MBps"
+                },
+                "partNumber": {
+                    "type": "string",
+                    "example": "Q28-100G-LR4-10"
+                },
+                "powerClass": {
+                    "type": "string",
+                    "example": "6 (4.5 W max.)"
+                },
+                "rev": {
+                    "type": "string",
+                    "example": "01"
+                },
+                "serialNumber": {
+                    "type": "string",
+                    "example": "BX2304250093"
+                },
+                "vendor": {
+                    "type": "string",
+                    "example": "BIC"
+                }
+            }
+        },
+        "level": {
+            "type": "object",
+            "properties": {
+                "rx_rate": {
+                    "type": "number",
+                    "example": 1.34
+                },
+                "tx_rate": {
+                    "type": "number",
+                    "example": -40
+                },
+                "bias": {
+                    "type": "number",
+                    "example": 56.8
+                }
+            }
+        },
+        "portAll": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "lanes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/lane"
+                    }
+                },
+                "levels": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/level"
+                    }
+                }
+            }
+        },
+        "portsAll": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/portAll"
+            }
+        },
+        "egressGroup": {
+            "type": "object",
+            "properties": {
+                "groupId": {
+                    "type": "string",
+                    "example": "egress-1"
+                },
+                "logicGroup": {
+                    "type": "string",
+                    "example": "selection-1"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "port": {
+                                "type": "string",
+                                "example": "1/0"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
