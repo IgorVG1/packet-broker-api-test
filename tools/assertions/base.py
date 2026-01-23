@@ -14,7 +14,7 @@ def assert_status_code(actual: int, expected: int):
     :param expected: Ожидаемый статус-код.
     :raises AssertionError: Если статус-коды не совпадают.
     """
-    logger.info('Check response status code equals to "{expected}"')
+    logger.info(f'Check response status code equals to "{expected}"')
     assert actual == expected, \
         (
             'Incorrect response status code.'

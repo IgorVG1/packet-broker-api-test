@@ -1,7 +1,7 @@
 import requests
 
-from clients.authentication_client.authentication_client import get_authentication_client
-from clients.authentication_client.authentication_schema import LoginRequestSchema
+from clients.authentication.authentication_client import get_authentication_client
+from clients.authentication.authentication_schema import LoginRequestSchema
 
 
 def delete_additional_filters():

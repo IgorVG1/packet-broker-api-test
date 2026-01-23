@@ -2,9 +2,10 @@ from functools import lru_cache
 
 from httpx import Client
 from pydantic import BaseModel, ConfigDict, Field
+from requests import Session
 
-from clients.authentication_client.authentication_client import get_authentication_client
-from clients.authentication_client.authentication_schema import LoginRequestSchema
+from clients.authentication.authentication_client import get_authentication_client
+from clients.authentication.authentication_schema import LoginRequestSchema
 from clients.event_hooks import log_request_event_hook, log_response_event_hook
 from config import settings
 
@@ -42,3 +43,16 @@ def get_private_http_client(user: AuthenticationUserSchema) -> Client:
         timeout=settings.http_client.timeout,
         headers={"Authorization": f"Bearer {login_response.access}"}
     )
+
+
+@lru_cache(maxsize=None)
+def get_private_http_session(access_token: str) -> Session:
+    """
+    Функция создаёт экземпляр requests.Session с аутентификацией пользователя.
+
+    :param access_token: Строковое значение access-token.
+    :return: Готовый к использованию объект requests.Session с установленным заголовком Authorization.
+    """
+    session = Session()
+    session.headers = {"Authorization": f"Bearer {access_token}"}
+    return session

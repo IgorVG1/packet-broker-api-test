@@ -1,8 +1,8 @@
 import pytest
 from pydantic import BaseModel
 
-from clients.authentication_client.authentication_client import AuthenticationClient, get_authentication_client
-from clients.authentication_client.authentication_schema import LoginRequestSchema, LoginResponseSchema
+from clients.authentication.authentication_client import AuthenticationClient, get_authentication_client
+from clients.authentication.authentication_schema import LoginRequestSchema, LoginResponseSchema
 from clients.private_http_builder import AuthenticationUserSchema
 
 

@@ -25,42 +25,8 @@ class CreateAdditionalFiltersRequestSchema(RootModel):
     Описание структуры запроса на создание дополнительных фильтров.
     Attributes:
         List[CreateAdditionalFiltersSchema] - Список дополнительных фильтров
-
-    Модель для запроса, соответствует массиву фильтров.
-    Используем __root__ для представления массива верхнего уровня.
     """
     root: List[CreateAdditionalFiltersSchema]
-
-    # Для удобства итерации
-    def __iter__(self):
-        return iter(self.__root__)
-
-    def __getitem__(self, index):
-        return self.__root__[index]
-
-    def __len__(self):
-        return len(self.__root__)
-
-    def model_dump(self, **kwargs):
-        """
-        Переопределяем, чтобы возвращать список, а не объект с ключом __root__
-        """
-        # Если запрошен режим JSON или не указан, возвращаем список
-        if kwargs.get('mode') == 'json' or not kwargs.get('by_alias'):
-            return [item.model_dump(**kwargs) for item in self.__root__]
-        return super().model_dump(**kwargs)
-
-    def model_dump_json(self, **kwargs):
-        import json
-        # Всегда возвращаем JSON-массив
-        return json.dumps(self.model_dump(**kwargs))
-
-
-class CreateAdditionalFiltersResponseSchema(BaseModel):
-    """
-    Описание структуры ответа на создание дополнительного фильтра.
-    """
-    pass
 
 
 class UpdateAdditionalFiltersRequestSchema(BaseModel):
@@ -78,28 +44,21 @@ class UpdateAdditionalFiltersRequestSchema(BaseModel):
     filter_ip_black_enable: bool    = Field(alias="filterIPBlackEnable", serialization_alias="filterIPBlackEnable", default_factory=fake.boolean)
 
 
-class UpdateAdditionalFiltersResponseSchema(BaseModel):
-    """
-    Описание структуры ответа на обновление дополнительного фильтра.
-    """
-    pass
-
-
 class DeleteAdditionalFiltersSchema(BaseModel):
     """
-    Описание структуры pydantic-model дополнительного фильтра.
+    Описание структуры pydantic-model для запроса на удаление дополнительного фильтра.
     Attributes:
-        direction: str
-        logic_group: str (logicGroup)
         value: str
+        direction: str
+        logicGroup: int
         type: str
     """
     model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
 
-    direction: str
-    logic_group: int = Field(alias="logicGroup", serialization_alias="logicGroup")
-    value: str
-    type: str
+    value: str       = Field(default="1.1.1.1")
+    direction: str   = Field(default="Src+Dst")
+    logic_group: int = Field(alias="logicGroup", default=1)
+    type: str        = Field(default="pass")
 
 
 class DeleteAdditionalFiltersRequestSchema(RootModel):
@@ -107,32 +66,5 @@ class DeleteAdditionalFiltersRequestSchema(RootModel):
     Описание структуры запроса на удаление дополнительных фильтров.
     Attributes:
         List[DeleteAdditionalFiltersSchema] - Список дополнительных фильтров
-
-    Модель для запроса, соответствует массиву фильтров.
-    Используем __root__ для представления массива верхнего уровня.
     """
     root: List[DeleteAdditionalFiltersSchema]
-
-    # Для удобства итерации
-    def __iter__(self):
-        return iter(self.__root__)
-
-    def __getitem__(self, index):
-        return self.__root__[index]
-
-    def __len__(self):
-        return len(self.__root__)
-
-    def model_dump(self, **kwargs):
-        """
-        Переопределяем, чтобы возвращать список, а не объект с ключом __root__
-        """
-        # Если запрошен режим JSON или не указан, возвращаем список
-        if kwargs.get('mode') == 'json' or not kwargs.get('by_alias'):
-            return [item.model_dump(**kwargs) for item in self.__root__]
-        return super().model_dump(**kwargs)
-
-    def model_dump_json(self, **kwargs):
-        import json
-        # Всегда возвращаем JSON-массив
-        return json.dumps(self.model_dump(**kwargs))

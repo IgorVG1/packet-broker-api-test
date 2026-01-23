@@ -1,12 +1,15 @@
 import allure
 from httpx import Response
+from requests import Response as requests_Response
 from clients.additional_filters.additional_filters_schema import CreateAdditionalFiltersRequestSchema, \
     UpdateAdditionalFiltersRequestSchema, DeleteAdditionalFiltersRequestSchema
 from clients.api_client import APIClient
-from clients.private_http_builder import AuthenticationUserSchema, get_private_http_client
+from clients.api_session import APISession
+from clients.private_http_builder import AuthenticationUserSchema, get_private_http_client, get_private_http_session
 from tools.routes import APIRoutes
 from clients.api_coverage import tracker
 
+# ----------------------------------------------------------------------------------------------------------------------
 
 class AdditionalFiltersClient(APIClient):
     """
@@ -21,9 +24,8 @@ class AdditionalFiltersClient(APIClient):
         :param request: Список словарей с direction, group_id(groupId), ip, type.
         :return: Ответ от сервера.
         """
-        json_data = request.model_dump(by_alias=True)
         return self.post(url=f'{APIRoutes.ADDITIONAL_FILTERS}',
-                         json=json_data)
+                         json=request.model_dump(by_alias=True))
 
 
     @allure.step('Update additional filters')
@@ -39,19 +41,6 @@ class AdditionalFiltersClient(APIClient):
                         json=request.model_dump(by_alias=True))
 
 
-    @allure.step('Delete additional filters')
-    @tracker.track_coverage_httpx(f'{APIRoutes.ADDITIONAL_FILTERS}')
-    def delete_additional_filters_api(self, request: DeleteAdditionalFiltersRequestSchema) -> Response:
-        """
-        Метод удаляет дополнительные фильтры.
-
-        :param request: Список словарей с direction, logic_group(logicGroup), value, type.
-        :return: Ответ от сервера.
-        """
-        return self.delete(url=f'{APIRoutes.ADDITIONAL_FILTERS}',
-                           json_data=request.model_dump(by_alias=True))
-
-
 def get_additional_filters_client(user: AuthenticationUserSchema) -> AdditionalFiltersClient:
     """
     Функция создаёт экземпляр AdditionalFiltersClient с уже настроенным HTTP-клиентом.
@@ -59,3 +48,28 @@ def get_additional_filters_client(user: AuthenticationUserSchema) -> AdditionalF
     :return: Готовый к использованию AdditionalFiltersClient.
     """
     return AdditionalFiltersClient(client=get_private_http_client(user=user))
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+class AdditionalFiltersSession(APISession):
+
+    @allure.step('Delete additional filters')
+    @tracker.track_coverage_requests(f'{APIRoutes.ADDITIONAL_FILTERS}')
+    def delete_additional_filters_api(self, request: DeleteAdditionalFiltersRequestSchema) -> requests_Response:
+        """
+        Метод удаления дополнительных фильтров.
+
+        :param request: Список словарей с value: str, direction: str, logic_group (logicGroup): int, type: str.
+        :return: Объект requests_Response с данными ответа.
+        """
+        return self.delete(url='http://192.168.7.57/api/additional_filters/',
+                           json=request.model_dump(by_alias=True))
+
+
+def get_additional_filters_session(access_token: str) -> AdditionalFiltersSession:
+    """
+    Функция создаёт экземпляр AdditionalFiltersSession с уже настроенным HTTP-клиентом.
+
+    :return: Готовый к использованию AdditionalFiltersSession.
+    """
+    return AdditionalFiltersSession(session=get_private_http_session(access_token=access_token))
