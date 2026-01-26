@@ -1,0 +1,380 @@
+swagger: "2.0"
+
+info:
+  description: "Описание REST API Packet Broker 2"
+  version: "2.0.5s"
+  title: "Packet Broker 2 - OpenAPI Documentation"
+
+host: "192.168.7.57"
+
+tags:
+
+- name: "additional_filters"
+  description: "Дополнительные фильтры"
+
+- name: "balancing"
+  description: "Группы балансировки"
+
+schemes:
+- "http"
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Введите токен с префиксом "Bearer", например "Bearer abcde12345"
+
+
+paths:
+
+  /api/additional_filters/:
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - "additional_filters"
+      summary: "Создание дополнительного фильтра"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Список дополнительных фильтров"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/CreateAdditionalFiltersSchema"
+      responses:
+        200:
+          description: "Дополнительный фильтр успешно создан"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса (Пример: Не указано направление правила дополнительной фильтрации)"
+
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+      - "additional_filters"
+      summary: "Сохранение дополнительного фильтра"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Дополнительный фильтр"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateAdditionalFiltersRequestSchema"
+      responses:
+        200:
+          description: "Дополнительный фильтр успешно сохранен"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса"
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+      - "additional_filters"
+      summary: "Удаление дополнительного фильтра"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Список дополнительных фильтров"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: '#/definitions/DeleteAdditionalFiltersSchema'
+      responses:
+        200:
+          description: "Дополнительный фильтр успешно создан"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса"
+
+  /api/balancing/:
+
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+      - "balancing"
+      summary: "Получение списка сконфигурированных групп балансировки"
+      produces:
+        - application/json
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BalancingListSchema"
+          description: "Список групп балансировки"
+        403:
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+          description: "Пользователь не имеет прав на совершение данного запроса"
+        412:
+          description: "Ошибка в конфигурации запроса (Пример: Не указано направление правила дополнительной фильтрации)"
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - "balancing"
+      summary: "Конфигурирование группы балансировки"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Группа балансировки"
+        required: true
+        schema:
+          type: "object"
+          $ref: "#/definitions/CreateBalancingRequestSchema"
+      responses:
+        200:
+          description: "Группа балансировки успешно добавлена"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса (Примеры: Балансировка для этой логической группы уже сконфигурирована; Неправильно задан ID логической группы; Неправильно указан тип балансировки)"
+
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+      - "balancing"
+      summary: "Редактирование конфигурации группы балансировки"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Группа балансировки"
+        required: true
+        schema:
+          type: "object"
+          $ref: "#/definitions/UpdateBalancingRequestSchema"
+      responses:
+        200:
+          description: "Группа балансировки успешно изменена"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса (Примеры: Неправильно задан ID логической группы; Неправильно указан тип балансировки)"
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+      - "balancing"
+      summary: "Удаление группы балансировки"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "Request body"
+        description: "Группа балансировки"
+        required: true
+        schema:
+          type: "object"
+          $ref: "#/definitions/DeleteBalancingRequestSchema"
+      responses:
+        200:
+          description: "Группа балансировки успешно удалена"
+        403:
+          description: "Пользователь не имеет прав на совершение данного запроса"
+          schema:
+            type: "object"
+            $ref: '#/definitions/ValidationErrorResponseSchema'
+        412:
+          description: "Ошибка в конфигурации запроса (Пример: В данной логической группе не задана балансировка, Некорреткный ID логической группы)"
+
+
+definitions:
+
+  ValidationErrorResponseSchema:
+    type: "object"
+    properties:
+      detail:
+        type: "string"
+        example: "Учетные данные не были предоставлены."
+
+  CreateAdditionalFiltersSchema:
+    in: body
+    type: "object"
+    properties:
+      groupId:
+        type: "string"
+        examples:
+          - "1"
+          - "L1"
+          - "1/0"
+      ip:
+        type: "string"
+      direction:
+        type: "string"
+        examples:
+          - "Src+Dst"
+          - "Src"
+          - "Dst"
+      type:
+        type: "string"
+        examples:
+          - "pass"
+          - "miss"
+    required:
+    - groupId
+    - ip
+    - direction
+    - type
+
+  UpdateAdditionalFiltersRequestSchema:
+    in: body
+    type: "object"
+    properties:
+      logicId:
+        type: "string"
+        examples:
+          - "1"
+          - "L1"
+          - "1/0"
+      filterIPWhiteEnable:
+        type: "boolean"
+        examples:
+          - "true"
+          - "false"
+
+      filterIPBlackEnable:
+        type: "boolean"
+        examples:
+          - "true"
+          - "false"
+    required:
+    - logicId
+    - filterIPWhiteEnable
+    - filterIPBlackEnable
+
+  DeleteAdditionalFiltersSchema:
+    in: body
+    type: "object"
+    properties:
+      logicGroup:
+        type: "integer"
+        format: "int32"
+        example: 1
+      value:
+        type: "string"
+        example: "1.1.1.1"
+      direction:
+        type: "string"
+        examples:
+          - "Src+Dst"
+          - "Src"
+          - "Dst"
+      type:
+        type: "string"
+        examples:
+          - "pass"
+          - "miss"
+    required:
+    - logicGroup
+    - value
+    - direction
+    - type
+
+  BalancingListSchema:
+    in: body
+    type: "object"
+    properties:
+      logicId:
+        type: "integer"
+        format: "int32"
+        example: 1
+      sel:
+        type: "integer"
+        format: "int32"
+        example: 1
+
+  CreateBalancingRequestSchema:
+    in: body
+    type: "object"
+    properties:
+      logicId:
+        type: "integer"
+        format: "int32"
+        example: 1
+      balanceType:
+        type: "integer"
+        format: "int32"
+        example: 1
+    required:
+    - logicId
+    - balanceType
+
+  UpdateBalancingRequestSchema:
+    in: body
+    type: "object"
+    properties:
+      logicId:
+        type: "integer"
+        format: "int32"
+        example: 1
+      balanceType:
+        type: "integer"
+        format: "int32"
+        example: 1
+    required:
+    - logicId
+    - balanceType
+
+  DeleteBalancingRequestSchema:
+    in: body
+    type: "object"
+    properties:
+      logicGroup:
+        type: "integer"
+        format: "int32"
+        example: 1
+    required:
+    - logicGroup

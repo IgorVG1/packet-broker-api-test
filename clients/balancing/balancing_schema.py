@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field, ConfigDict, RootModel
 from typing import List
-from tools.fakers import fake
 
 
 class BalancingListSchema(BaseModel):
@@ -55,11 +54,8 @@ class DeleteBalancingRequestSchema(BaseModel):
     """
     Описание структуры pydantic-model для запроса на удаление балансировки.
     Attributes:
-        value: str
-        direction: str
-        logicGroup: int
-        type: str
+        logicGroup (logic_group): int
     """
     model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
 
-    logic_group: int = Field(alias="logicGroup", default=1)
+    logic_group: int | str = Field(alias="logicGroup", default=1)

@@ -90,3 +90,37 @@ def assert_update_balancing_without_balance_type_response(response_str: str):
     assert_equal(actual=response_str,
                  expected=expected_value,
                  name='string response')
+
+
+@allure.step('Check response of delete balancing that had been deleted ')
+def assert_delete_had_been_deleted_balancing(response_str: str):
+    """
+    Проверяет структуру предупреждения о попытке удаления уже удаленной группы балансировки.
+    [412]PRECONDITION_FAILED - В данной логической группе не задана балансировка
+
+    :param response_str: Ответ API строкового типа.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    logger.info('Check response of delete balancing that had been deleted')
+
+    expected_value = '"В данной логической группе не задана балансировка"'
+    assert_equal(actual=response_str,
+                 expected=expected_value,
+                 name='string response')
+
+
+@allure.step('Check response of delete without logicGroup')
+def assert_delete_without_logic_group_response(response_str: str):
+    """
+    Проверяет структуру предупреждения о попытке удаления без указания logicGroup.
+    [412]PRECONDITION_FAILED - Некорреткный ID логической группы
+
+    :param response_str: Ответ API строкового типа.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    logger.info('Check response of delete without logicGroup')
+
+    expected_value = '"Некорреткный ID логической группы"'
+    assert_equal(actual=response_str,
+                 expected=expected_value,
+                 name='string response')

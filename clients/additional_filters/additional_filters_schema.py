@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, ConfigDict, RootModel
-from typing import List
+from typing import List, Optional
 from tools.fakers import fake
 
 
@@ -55,10 +55,10 @@ class DeleteAdditionalFiltersSchema(BaseModel):
     """
     model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
 
-    value: str       = Field(default="1.1.1.1")
-    direction: str   = Field(default="Src+Dst")
-    logic_group: int = Field(alias="logicGroup", default=1)
-    type: str        = Field(default="pass")
+    value: Optional[str]       = Field(default="1.1.1.1")
+    direction: Optional[str]   = Field(default="Src+Dst")
+    logic_group: Optional[int] = Field(alias="logicGroup", default=1)
+    type: Optional[str]        = Field(default="pass")
 
 
 class DeleteAdditionalFiltersRequestSchema(RootModel):

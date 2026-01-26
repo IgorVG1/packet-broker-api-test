@@ -1,5 +1,5 @@
 import pytest
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from clients.additional_filters.additional_filters_client import AdditionalFiltersClient, get_additional_filters_client, \
     AdditionalFiltersSession, get_additional_filters_session
 from clients.additional_filters.additional_filters_schema import CreateAdditionalFiltersRequestSchema, \
@@ -16,15 +16,15 @@ class DeleteAdditionalFiltersData(BaseModel):
         ip: str
         type: str
     """
-    direction: str
-    group_id: str
-    ip: str
-    type: str
+    direction: str  = Field(default='Src+Dst')
+    group_id: str   = Field(default='1')
+    ip: str         = Field(default='1.1.1.1')
+    type: str       = Field(default='pass')
 
 
 class AdditionalFilterFixture(BaseModel):
     request: CreateAdditionalFiltersRequestSchema
-    response: DeleteAdditionalFiltersData
+    test_data: DeleteAdditionalFiltersData
 
 
 @pytest.fixture(scope='function')
@@ -39,21 +39,20 @@ def additional_filters_session(function_user: UserFixture) -> AdditionalFiltersS
 
 @pytest.fixture(scope='function')
 def function_additional_filters(additional_filters_client: AdditionalFiltersClient):
-    request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema])
-    response = additional_filters_client.create_additional_filters_api(request=request)
-    return AdditionalFilterFixture(request=request)
+    test_data = DeleteAdditionalFiltersData()
+    request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema()])
+    additional_filters_client.create_additional_filters_api(request=request)
+    return AdditionalFilterFixture(request=request,
+                                   test_data=test_data)
 
 
 @pytest.fixture(scope='function')
 def function_additional_filters_for_delete(additional_filters_client: AdditionalFiltersClient):
-    test_data = DeleteAdditionalFiltersData(direction = 'Src+Dst',
-                                            group_id = '1',
-                                            ip = '1.1.1.1',
-                                            type = 'pass')
+    test_data = DeleteAdditionalFiltersData()
     request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema(direction=test_data.direction,
                                                                                   group_id=test_data.group_id,
                                                                                   ip=test_data.ip,
                                                                                   type=test_data.type)])
-    response = additional_filters_client.create_additional_filters_api(request=request)
+    additional_filters_client.create_additional_filters_api(request=request)
     return AdditionalFilterFixture(request=request,
-                                   response=test_data)
+                                   test_data=test_data)

@@ -22,7 +22,13 @@ def balancing_session(function_user: UserFixture) -> BalancingSession:
 
 @pytest.fixture(scope='function')
 def function_balancing(balancing_client: BalancingClient) -> BalancingFixture:
-
     request_create = CreateBalancingRequestSchema()
-    response_create = balancing_client.create_balancing_api(request=request_create)
+    balancing_client.create_balancing_api(request=request_create)
     return BalancingFixture(request=request_create)
+
+
+@pytest.fixture(scope='function')
+def function_balancing_after_delete(balancing_client: BalancingClient):
+    yield
+    request_create = CreateBalancingRequestSchema()
+    balancing_client.create_balancing_api(request=request_create)

@@ -1,6 +1,0 @@
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/token/access/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/token/access/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/additional_filters/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 412 Precondition Failed from "http://192.168.7.57/api/additional_filters/"
-[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
-[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "str" - equals to ""Не указано направление правила дополнительной фильтрации""

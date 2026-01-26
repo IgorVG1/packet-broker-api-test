@@ -4,8 +4,12 @@ from clients.additional_filters.additional_filters_client import AdditionalFilte
 from clients.additional_filters.additional_filters_schema import CreateAdditionalFiltersRequestSchema, \
     CreateAdditionalFiltersSchema, UpdateAdditionalFiltersRequestSchema, DeleteAdditionalFiltersSchema, \
     DeleteAdditionalFiltersRequestSchema
+from clients.balancing.balancing_client import BalancingClient
+from clients.balancing.balancing_schema import CreateBalancingRequestSchema
+from clients.errors_schema import ValidationErrorResponseSchema
 from clients.public.public_client import PublicClient, PublicSession
 from fixtures.additional_filters import AdditionalFilterFixture
+from fixtures.balancing import balancing_client
 from tests.additional_filters.additional_filters_assertions import \
     assert_create_additional_filters_without_direction_response
 from tools.allure.epics import AllureEpic
@@ -14,7 +18,9 @@ from tools.allure.stories import AllureStory
 from tools.allure.tags import AllureTag
 from tools.assertions.base import assert_status_code
 from tools.allure.severity import AllureSeverity
+from tools.assertions.schema import validate_json_schema
 from tools.logger import get_logger
+from tools.assertions.errors import assert_error_for_not_authenticated_user
 
 
 logger = get_logger('ADDITIONAL_FILTERS_ASSERTIONS')
@@ -64,9 +70,12 @@ class TestAdditionalFilters:
     def test_create_additional_filters_without_access_token(self, public_client: PublicClient):
         request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema()])
         response = public_client.create_additional_filters_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
-
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
 
 
     @allure.title("[200]OK - Update additional filters")
@@ -75,10 +84,10 @@ class TestAdditionalFilters:
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
     @allure.severity(AllureSeverity.MAJOR)
     def test_update_additional_filters(self, additional_filters_client: AdditionalFiltersClient):
-        request = UpdateAdditionalFiltersRequestSchema()
-        response = additional_filters_client.update_additional_filters_api(request=request)
+            request = UpdateAdditionalFiltersRequestSchema()
+            response = additional_filters_client.update_additional_filters_api(request=request)
 
-        assert_status_code(response.status_code, HTTPStatus.OK)
+            assert_status_code(response.status_code, HTTPStatus.OK)
 
 
     @allure.title("[403]FORBIDDEN - Update additional filters without access-token")
@@ -89,8 +98,12 @@ class TestAdditionalFilters:
     def test_update_additional_filters_without_access_token(self, public_client: PublicClient):
         request = UpdateAdditionalFiltersRequestSchema()
         response = public_client.update_additional_filters_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
 
 
     @allure.title("[200]OK - Delete additional filters")
@@ -101,10 +114,10 @@ class TestAdditionalFilters:
     def test_delete_additional_filters(self,
                                         additional_filters_session: AdditionalFiltersSession,
                                         function_additional_filters_for_delete: AdditionalFilterFixture):
-        request = DeleteAdditionalFiltersRequestSchema([DeleteAdditionalFiltersSchema(value=function_additional_filters_for_delete.response.ip,
-                                                 direction=function_additional_filters_for_delete.response.direction,
-                                                 logicGroup=int(function_additional_filters_for_delete.response.group_id),
-                                                 type=function_additional_filters_for_delete.response.type)])
+        request = DeleteAdditionalFiltersRequestSchema([DeleteAdditionalFiltersSchema(value=function_additional_filters_for_delete.test_data.ip,
+                                                 direction=function_additional_filters_for_delete.test_data.direction,
+                                                 logicGroup=int(function_additional_filters_for_delete.test_data.group_id),
+                                                 type=function_additional_filters_for_delete.test_data.type)])
         response = additional_filters_session.delete_additional_filters_api(request=request)
 
         assert_status_code(response.status_code, HTTPStatus.OK)
@@ -119,5 +132,9 @@ class TestAdditionalFilters:
                                         function_additional_filters_for_delete: AdditionalFilterFixture):
         request = DeleteAdditionalFiltersRequestSchema([DeleteAdditionalFiltersSchema()])
         response = public_session.delete_additional_filters_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())

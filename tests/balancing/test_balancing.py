@@ -1,20 +1,15 @@
-import allure, pytest, requests
+import allure, pytest
 from http import HTTPStatus
-from clients.additional_filters.additional_filters_client import AdditionalFiltersClient
-from clients.additional_filters.additional_filters_schema import CreateAdditionalFiltersRequestSchema, \
-    CreateAdditionalFiltersSchema, UpdateAdditionalFiltersRequestSchema
 from clients.balancing.balancing_client import BalancingClient, BalancingSession
 from clients.balancing.balancing_schema import GetBalancingListResponseSchema, CreateBalancingRequestSchema, \
     UpdateBalancingRequestSchema, DeleteBalancingRequestSchema
-from clients.public.public_client import PublicClient
-from fixtures.additional_filters import AdditionalFilterFixture
-from fixtures.authentication import UserFixture
+from clients.errors_schema import ValidationErrorResponseSchema
+from clients.public.public_client import PublicClient, PublicSession
 from fixtures.balancing import BalancingFixture
-from tests.additional_filters.additional_filters_assertions import \
-    assert_create_additional_filters_without_direction_response
 from tests.balancing.balancing_assertions import assert_create_balancing_for_created_balancing_group_response, \
     assert_create_balancing_without_logic_id_response, assert_create_balancing_without_balance_type_response, \
-    assert_update_balancing_without_logic_id_response, assert_update_balancing_without_balance_type_response
+    assert_update_balancing_without_logic_id_response, assert_update_balancing_without_balance_type_response, \
+    assert_delete_had_been_deleted_balancing, assert_delete_without_logic_group_response
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.stories import AllureStory
@@ -23,6 +18,7 @@ from tools.assertions.base import assert_status_code
 from tools.allure.severity import AllureSeverity
 from tools.assertions.schema import validate_json_schema
 from tools.logger import get_logger
+from tools.assertions.errors import assert_error_for_not_authenticated_user
 
 
 logger = get_logger('BALANCING_INFO')
@@ -35,7 +31,7 @@ logger = get_logger('BALANCING_INFO')
 @allure.feature(AllureFeature.BALANCING)
 @allure.parent_suite(AllureEpic.PACKET_BROKER)
 @allure.suite(AllureFeature.BALANCING)
-class TestAdditionalFilters:
+class TestBalancing:
 
 
     @allure.title("[200]OK - Get balancing list")
@@ -50,6 +46,20 @@ class TestAdditionalFilters:
         logger.info(f'Response data: \n{response.json()}')
 
         assert_status_code(response.status_code, HTTPStatus.OK)
+        validate_json_schema(response.json(), response_data.model_json_schema())
+
+
+    @allure.title("[403]FORBIDDEN - Get balancing list with access_token")
+    @allure.tag(AllureTag.GET_ENTITIES)
+    @allure.story(AllureStory.GET_ENTITIES)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_get_balancing_list_without_access_token(self, public_client: PublicClient):
+        response = public_client.get_balancing_list_api()
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
@@ -77,7 +87,7 @@ class TestAdditionalFilters:
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
-    def test_create_balancing_for_created_balancing_group(self, balancing_client: BalancingClient, function_balancing: BalancingFixture):
+    def test_create_balancing_for_created_balancing_group(self, balancing_client: BalancingClient):
         request = CreateBalancingRequestSchema()
         response = balancing_client.create_balancing_api(request=request)
 
@@ -119,8 +129,11 @@ class TestAdditionalFilters:
     def test_create_balancing_without_access_token(self, public_client: PublicClient):
         request = CreateBalancingRequestSchema()
         response = public_client.create_balancing_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(response.json(), response_data.model_json_schema())
 
 
     @allure.title("[200]OK - Update balancing group")
@@ -161,6 +174,21 @@ class TestAdditionalFilters:
         assert_update_balancing_without_balance_type_response(response_str=response.text)
 
 
+    @allure.title("[403]FORBIDDEN - Update balancing without access-token")
+    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.story(AllureStory.UPDATE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_update_balancing_without_access_token(self, public_client: PublicClient):
+        request = UpdateBalancingRequestSchema()
+        response = public_client.update_balancing_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(response.json(), response_data.model_json_schema())
+
+
     @allure.title("[200]OK - Delete balancing group")
     @allure.tag(AllureTag.DELETE_ENTITY)
     @allure.story(AllureStory.DELETE_ENTITY)
@@ -180,3 +208,47 @@ class TestAdditionalFilters:
 
         logger.info(f'Create balancing api status code "{response_create.status_code}"')
         logger.info(f'Create balancing api response body "{response_create.text}"')
+
+
+    @allure.title("[412]PRECONDITION_FAILED - Delete balancing group that had been deleted")
+    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_delete_had_been_deleted_balancing(self, balancing_session: BalancingSession, function_balancing: BalancingFixture, function_balancing_after_delete):
+
+        request = DeleteBalancingRequestSchema(logic_group=function_balancing.request.logic_id)
+        balancing_session.delete_balancing_api(request=request)
+        response = balancing_session.delete_balancing_api(request=request)
+
+        assert_delete_had_been_deleted_balancing(response_str=response.text)
+        assert_status_code(response.status_code, HTTPStatus.PRECONDITION_FAILED)
+
+
+    @allure.title("[412]PRECONDITION_FAILED - Delete balancing group without logicGroup")
+    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_delete_without_logic_group(self, balancing_session: BalancingSession):
+
+        request = DeleteBalancingRequestSchema(logic_group="")
+        response = balancing_session.delete_balancing_api(request=request)
+
+        assert_delete_without_logic_group_response(response_str=response.text)
+        assert_status_code(response.status_code, HTTPStatus.PRECONDITION_FAILED)
+
+
+    @allure.title("[403]FORBIDDEN - Delete balancing without access-token")
+    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_delete_balancing_without_access_token(self, public_session: PublicSession):
+        request = DeleteBalancingRequestSchema()
+        response = public_session.delete_balancing_api(request=request)
+        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(response.json(), response_data.model_json_schema())
