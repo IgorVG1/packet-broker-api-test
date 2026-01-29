@@ -56,7 +56,7 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса (Пример: Не указано направление правила дополнительной фильтрации)"
 
@@ -84,7 +84,7 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса"
 
@@ -114,7 +114,7 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса"
 
@@ -138,7 +138,7 @@ paths:
         403:
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
           description: "Пользователь не имеет прав на совершение данного запроса"
         412:
           description: "Ошибка в конфигурации запроса (Пример: Не указано направление правила дополнительной фильтрации)"
@@ -168,7 +168,7 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса (Примеры: Балансировка для этой логической группы уже сконфигурирована; Неправильно задан ID логической группы; Неправильно указан тип балансировки)"
 
@@ -197,7 +197,7 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса (Примеры: Неправильно задан ID логической группы; Неправильно указан тип балансировки)"
 
@@ -226,14 +226,14 @@ paths:
           description: "Пользователь не имеет прав на совершение данного запроса"
           schema:
             type: "object"
-            $ref: '#/definitions/ValidationErrorResponseSchema'
+            $ref: '#/definitions/AuthenticationErrorResponseSchema'
         412:
           description: "Ошибка в конфигурации запроса (Пример: В данной логической группе не задана балансировка, Некорреткный ID логической группы)"
 
 
 definitions:
 
-  ValidationErrorResponseSchema:
+  AuthenticationErrorResponseSchema:
     type: "object"
     properties:
       detail:

@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 
-class ValidationErrorResponseSchema(BaseModel):
+class AuthenticationErrorResponseSchema(BaseModel):
     """
-    Модель, описывающая структуру ответа API с ошибкой валидации.
+    Модель, описывающая структуру ответа API с ошибкой аутентификации пользователя.
     Attributes:
         detail: "Учетные данные не были предоставлены."
     """

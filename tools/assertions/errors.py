@@ -1,6 +1,6 @@
 import allure
 
-from clients.errors_schema import ValidationErrorResponseSchema
+from clients.errors_schema import AuthenticationErrorResponseSchema
 from tools.assertions.base import assert_equal
 from tools.logger import get_logger
 
@@ -9,7 +9,7 @@ logger = get_logger('ERRORS_ASSERTIONS')
 
 
 @allure.step('Check validation error response')
-def assert_error_for_not_authenticated_user(response: ValidationErrorResponseSchema):
+def assert_error_for_not_authenticated_user(response: AuthenticationErrorResponseSchema):
     """
     Проверяет структуру ошибки выполнения запроса от неаутентифицированного пользователя.
     [403]FORBIDDEN - Учетные данные не были предоставлены.

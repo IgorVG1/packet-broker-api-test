@@ -21,7 +21,6 @@ class BalancingClient(APIClient):
         """
         Метод получения списка сконфигурированных групп балансировки.
 
-        :param request: Словарь с logic_id(logicId), balance_type(balanceType).
         :return: Ответ от сервера.
         """
         return self.get(url=f'{APIRoutes.BALANCING}')

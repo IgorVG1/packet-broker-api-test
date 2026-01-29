@@ -1,0 +1,1 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "DELETE" request to "http://192.168.7.57/api/custom_config/"

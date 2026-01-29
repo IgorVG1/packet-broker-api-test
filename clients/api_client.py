@@ -1,5 +1,4 @@
 import allure
-from requests import Response as RequestsResponse
 from typing import Optional, Any
 
 from httpx import Client, URL, Response, QueryParams
@@ -68,14 +67,12 @@ class APIClient:
 
     @allure.step('Make DELETE-request to {url}')
     def delete(self,
-               url: str | URL,
-               json_data: Optional[Any] = None
-               ) -> RequestsResponse:
+               url: str | URL
+               ) -> Response:
         """
         Выполняет DELETE-запрос.
 
         :param url: URL-адрес эндпоинта.
         :return: Объект Response с данными ответа.
         """
-        return self.client.delete(url=url,
-                                  json=json_data)
+        return self.client.delete(url=url)

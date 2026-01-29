@@ -1,5 +1,5 @@
 from typing import Self
-from pydantic import BaseModel, HttpUrl, DirectoryPath
+from pydantic import BaseModel, HttpUrl, DirectoryPath, FilePath
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,9 +12,14 @@ class HTTPClientConfig(BaseModel):
         return str(self.url)        # pydantic.HttpUrl автоматически добавляет завершающий /
 
 
-class UserData(BaseModel):
+class UserDataConfig(BaseModel):
     username: str
     password: str
+
+
+class TestDataConfig(BaseModel):
+    custom_config_json_file: FilePath
+    invalid_custom_config_json_file: FilePath
 
 
 class Settings(BaseSettings):
@@ -24,7 +29,8 @@ class Settings(BaseSettings):
         env_file_encoding='utf-8',
         env_nested_delimiter='.')
 
-    user_data: UserData
+    test_data: TestDataConfig
+    user_data: UserDataConfig
     http_client: HTTPClientConfig
     allure_results_dir: DirectoryPath
 

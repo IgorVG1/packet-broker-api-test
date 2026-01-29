@@ -23,7 +23,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[403]FORBIDDEN - Log in with invalid username")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)

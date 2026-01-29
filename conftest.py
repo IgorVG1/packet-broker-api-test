@@ -5,4 +5,5 @@ pytest_plugins = (
     'fixtures.authentication',
     'fixtures.additional_filters',
     'fixtures.balancing',
+    'fixtures.custom_config',
 )

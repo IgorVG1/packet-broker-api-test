@@ -3,7 +3,7 @@ from http import HTTPStatus
 from clients.balancing.balancing_client import BalancingClient, BalancingSession
 from clients.balancing.balancing_schema import GetBalancingListResponseSchema, CreateBalancingRequestSchema, \
     UpdateBalancingRequestSchema, DeleteBalancingRequestSchema
-from clients.errors_schema import ValidationErrorResponseSchema
+from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.public.public_client import PublicClient, PublicSession
 from fixtures.balancing import BalancingFixture
 from tests.balancing.balancing_assertions import assert_create_balancing_for_created_balancing_group_response, \
@@ -21,7 +21,7 @@ from tools.logger import get_logger
 from tools.assertions.errors import assert_error_for_not_authenticated_user
 
 
-logger = get_logger('BALANCING_INFO')
+logger = get_logger('BALANCING')
 
 
 @pytest.mark.balancing
@@ -35,7 +35,7 @@ class TestBalancing:
 
 
     @allure.title("[200]OK - Get balancing list")
-    @allure.tag(AllureTag.GET_ENTITIES)
+    @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
     @allure.sub_suite(AllureStory.GET_ENTITIES)
     @allure.severity(AllureSeverity.BLOCKER)
@@ -50,13 +50,13 @@ class TestBalancing:
 
 
     @allure.title("[403]FORBIDDEN - Get balancing list with access_token")
-    @allure.tag(AllureTag.GET_ENTITIES)
+    @allure.tag(AllureTag.GET_ENTITIES, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_get_balancing_list_without_access_token(self, public_client: PublicClient):
         response = public_client.get_balancing_list_api()
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)
@@ -64,7 +64,7 @@ class TestBalancing:
 
 
     @allure.title("[200]OK - Create balancing group")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.CREATE_ENTITY)
     @allure.severity(AllureSeverity.BLOCKER)
@@ -83,7 +83,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Create balancing for created balancing group")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -96,7 +96,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Create balancing without logicId")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -109,7 +109,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Create balancing without balanceType")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -122,14 +122,14 @@ class TestBalancing:
 
 
     @allure.title("[403]FORBIDDEN - Create balancing without access-token")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_create_balancing_without_access_token(self, public_client: PublicClient):
         request = CreateBalancingRequestSchema()
         response = public_client.create_balancing_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)
@@ -137,7 +137,7 @@ class TestBalancing:
 
 
     @allure.title("[200]OK - Update balancing group")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
     @allure.severity(AllureSeverity.MAJOR)
@@ -149,7 +149,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Update balancing group without logicId")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -162,7 +162,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Update balancing group without balanceType")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -175,14 +175,14 @@ class TestBalancing:
 
 
     @allure.title("[403]FORBIDDEN - Update balancing without access-token")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_update_balancing_without_access_token(self, public_client: PublicClient):
         request = UpdateBalancingRequestSchema()
         response = public_client.update_balancing_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)
@@ -190,7 +190,7 @@ class TestBalancing:
 
 
     @allure.title("[200]OK - Delete balancing group")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.DELETE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -211,7 +211,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group that had been deleted")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -226,7 +226,7 @@ class TestBalancing:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group without logicGroup")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -240,14 +240,14 @@ class TestBalancing:
 
 
     @allure.title("[403]FORBIDDEN - Delete balancing without access-token")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_delete_balancing_without_access_token(self, public_session: PublicSession):
         request = DeleteBalancingRequestSchema()
         response = public_session.delete_balancing_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)

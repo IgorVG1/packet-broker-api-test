@@ -6,7 +6,7 @@ from clients.additional_filters.additional_filters_schema import CreateAdditiona
     DeleteAdditionalFiltersRequestSchema
 from clients.balancing.balancing_client import BalancingClient
 from clients.balancing.balancing_schema import CreateBalancingRequestSchema
-from clients.errors_schema import ValidationErrorResponseSchema
+from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.public.public_client import PublicClient, PublicSession
 from fixtures.additional_filters import AdditionalFilterFixture
 from fixtures.balancing import balancing_client
@@ -23,7 +23,7 @@ from tools.logger import get_logger
 from tools.assertions.errors import assert_error_for_not_authenticated_user
 
 
-logger = get_logger('ADDITIONAL_FILTERS_ASSERTIONS')
+logger = get_logger('ADDITIONAL_FILTERS')
 
 
 @pytest.mark.additional_filters
@@ -37,7 +37,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[200]OK - Create additional filters")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.CREATE_ENTITY)
     @allure.severity(AllureSeverity.BLOCKER)
@@ -50,7 +50,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[412]PRECONDITION_FAILED - Create additional filters without direction")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -63,14 +63,14 @@ class TestAdditionalFilters:
 
 
     @allure.title("[403]FORBIDDEN - Create additional filters without access-token")
-    @allure.tag(AllureTag.CREATE_ENTITY)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_create_additional_filters_without_access_token(self, public_client: PublicClient):
         request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema()])
         response = public_client.create_additional_filters_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)
@@ -79,7 +79,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[200]OK - Update additional filters")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
     @allure.severity(AllureSeverity.MAJOR)
@@ -91,14 +91,14 @@ class TestAdditionalFilters:
 
 
     @allure.title("[403]FORBIDDEN - Update additional filters without access-token")
-    @allure.tag(AllureTag.UPDATE_ENTITY)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
     def test_update_additional_filters_without_access_token(self, public_client: PublicClient):
         request = UpdateAdditionalFiltersRequestSchema()
         response = public_client.update_additional_filters_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)
@@ -107,7 +107,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[200]OK - Delete additional filters")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.DELETE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -124,7 +124,7 @@ class TestAdditionalFilters:
 
 
     @allure.title("[403]FORBIDDEN - Delete additional filters without access-token")
-    @allure.tag(AllureTag.DELETE_ENTITY)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
@@ -132,7 +132,7 @@ class TestAdditionalFilters:
                                         function_additional_filters_for_delete: AdditionalFilterFixture):
         request = DeleteAdditionalFiltersRequestSchema([DeleteAdditionalFiltersSchema()])
         response = public_session.delete_additional_filters_api(request=request)
-        response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(response.status_code, HTTPStatus.FORBIDDEN)
         assert_error_for_not_authenticated_user(response=response_data)

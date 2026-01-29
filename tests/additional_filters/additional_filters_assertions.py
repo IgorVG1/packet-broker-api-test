@@ -1,6 +1,6 @@
 import allure
 
-from clients.errors_schema import ValidationErrorResponseSchema
+from clients.errors_schema import AuthenticationErrorResponseSchema
 from tools.assertions.base import assert_equal
 from tools.logger import get_logger
 
