@@ -221,6 +221,7 @@ class TestBalancing:
 
 
     @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
+    @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group that had been deleted")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

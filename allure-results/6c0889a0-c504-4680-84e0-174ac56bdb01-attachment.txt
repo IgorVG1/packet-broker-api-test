@@ -1,8 +1,0 @@
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/token/access/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/token/access/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "GET" request to "http://192.168.7.57/api/balancing/"
-[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/balancing/"
-[32mINFO    [0m BALANCING:test_balancing.py:47 Response data: 
-[{'logicId': 1, 'sel': 0}, {'logicId': 2, 'sel': 2}, {'logicId': 3, 'sel': 4}]
-[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "200"
-[32mINFO    [0m SCHEMA_ASSERTIONS:schema.py:20 Validate JSON schema
