@@ -6,6 +6,7 @@ from clients.balancing.balancing_schema import GetBalancingListResponseSchema, C
 from clients.api_client import APIClient
 from clients.api_session import APISession
 from clients.private_http_builder import AuthenticationUserSchema, get_private_http_client, get_private_http_session
+from config import settings
 from tools.routes import APIRoutes
 from clients.api_coverage import tracker
 
@@ -77,7 +78,7 @@ class BalancingSession(APISession):
         :param request: Словарь с logic_group (logicGroup).
         :return: Объект requests_Response с данными ответа.
         """
-        return self.delete(url='http://192.168.7.57/api/balancing/',
+        return self.delete(url=f'{settings.http_client.client_url}/api/balancing/',
                            json=request.model_dump(by_alias=True))
 
 

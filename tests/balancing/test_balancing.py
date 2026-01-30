@@ -1,10 +1,12 @@
 import allure, pytest
+
 from http import HTTPStatus
 from clients.balancing.balancing_client import BalancingClient, BalancingSession
 from clients.balancing.balancing_schema import GetBalancingListResponseSchema, CreateBalancingRequestSchema, \
     UpdateBalancingRequestSchema, DeleteBalancingRequestSchema
 from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.public.public_client import PublicClient, PublicSession
+from config import settings
 from fixtures.balancing import BalancingFixture
 from tests.balancing.balancing_assertions import assert_create_balancing_for_created_balancing_group_response, \
     assert_create_balancing_without_logic_id_response, assert_create_balancing_without_balance_type_response, \
@@ -49,6 +51,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Get balancing list with access_token")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -82,6 +85,7 @@ class TestBalancing:
             assert_status_code(response.status_code, HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Create balancing for created balancing group")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -95,6 +99,7 @@ class TestBalancing:
         assert_create_balancing_for_created_balancing_group_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Create balancing without logicId")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -108,6 +113,7 @@ class TestBalancing:
         assert_create_balancing_without_logic_id_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Create balancing without balanceType")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -121,6 +127,7 @@ class TestBalancing:
         assert_create_balancing_without_balance_type_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Create balancing without access-token")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -148,6 +155,7 @@ class TestBalancing:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Update balancing group without logicId")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -161,6 +169,7 @@ class TestBalancing:
         assert_update_balancing_without_logic_id_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Update balancing group without balanceType")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -174,6 +183,7 @@ class TestBalancing:
         assert_update_balancing_without_balance_type_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Update balancing without access-token")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -210,6 +220,7 @@ class TestBalancing:
         logger.info(f'Create balancing api response body "{response_create.text}"')
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group that had been deleted")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
@@ -225,6 +236,7 @@ class TestBalancing:
         assert_status_code(response.status_code, HTTPStatus.PRECONDITION_FAILED)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group without logicGroup")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
@@ -239,6 +251,7 @@ class TestBalancing:
         assert_status_code(response.status_code, HTTPStatus.PRECONDITION_FAILED)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Delete balancing without access-token")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

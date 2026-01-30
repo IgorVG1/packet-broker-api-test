@@ -1,9 +1,12 @@
 import pytest
 from pydantic import BaseModel
 
+from clients.authentication.authentication_client import get_authentication_client
+from clients.authentication.authentication_schema import LoginRequestSchema
 from clients.custom_config.custom_config_client import CustomConfigClient, get_custom_config_client, \
     get_unauthorised_custom_config_client
 from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
+from clients.private_http_builder import AuthenticationUserSchema
 from config import settings
 from fixtures.authentication import UserFixture
 

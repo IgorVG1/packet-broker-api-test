@@ -1,5 +1,5 @@
 from typing import Self
-from pydantic import BaseModel, HttpUrl, DirectoryPath, FilePath
+from pydantic import BaseModel, HttpUrl, DirectoryPath, FilePath, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +22,16 @@ class TestDataConfig(BaseModel):
     invalid_custom_config_json_file: FilePath
 
 
+class XdistGroupNamesConfig(BaseModel):
+    """
+    Добавляем маркировку @pytest.mark.xdist_group(name="__name__") к нашим тестам, чтобы они выполнялись в одном потоке.
+
+    Attributes:
+        negative_tests: str - Имя потока (xdist_group) при параллельном запуске тестов
+    """
+    negative_tests: str = Field(description='Поток авто-тестов для проверки негативных сценариев')
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         extra='allow',
@@ -29,6 +39,7 @@ class Settings(BaseSettings):
         env_file_encoding='utf-8',
         env_nested_delimiter='.')
 
+    xdist_group_names: XdistGroupNamesConfig
     test_data: TestDataConfig
     user_data: UserDataConfig
     http_client: HTTPClientConfig

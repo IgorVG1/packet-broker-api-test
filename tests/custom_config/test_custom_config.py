@@ -1,6 +1,5 @@
-import time
+import allure, pytest, time
 
-import allure, pytest
 from http import HTTPStatus
 from clients.custom_config.custom_config_client import CustomConfigClient
 from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
@@ -47,6 +46,7 @@ class TestCustomConfig:
         logger.info(f'Size of download content: "{response.num_bytes_downloaded} bytes".')
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Download custom config from switch by unauthorised user")
     @allure.tag(AllureTag.GET_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.GET_ENTITY)
@@ -83,6 +83,7 @@ class TestCustomConfig:
                            expected=HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Upload my custom config to the switch by unauthorised user")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -100,6 +101,7 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title('[412]PRECONDITION_FAILED - Upload my "broken" custom config to the switch')
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST, AllureTag.FLAKY_TEST)
@@ -128,6 +130,7 @@ class TestCustomConfig:
                            expected=HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Saving actual custom config by unauthorised user")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -156,6 +159,7 @@ class TestCustomConfig:
                            expected=HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Restore saved custom config by unauthorised user")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

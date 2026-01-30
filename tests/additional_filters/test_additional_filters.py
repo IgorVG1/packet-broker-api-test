@@ -4,12 +4,10 @@ from clients.additional_filters.additional_filters_client import AdditionalFilte
 from clients.additional_filters.additional_filters_schema import CreateAdditionalFiltersRequestSchema, \
     CreateAdditionalFiltersSchema, UpdateAdditionalFiltersRequestSchema, DeleteAdditionalFiltersSchema, \
     DeleteAdditionalFiltersRequestSchema
-from clients.balancing.balancing_client import BalancingClient
-from clients.balancing.balancing_schema import CreateBalancingRequestSchema
 from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.public.public_client import PublicClient, PublicSession
+from config import settings
 from fixtures.additional_filters import AdditionalFilterFixture
-from fixtures.balancing import balancing_client
 from tests.additional_filters.additional_filters_assertions import \
     assert_create_additional_filters_without_direction_response
 from tools.allure.epics import AllureEpic
@@ -49,6 +47,7 @@ class TestAdditionalFilters:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[412]PRECONDITION_FAILED - Create additional filters without direction")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -62,6 +61,7 @@ class TestAdditionalFilters:
         assert_create_additional_filters_without_direction_response(response_str=response.text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Create additional filters without access-token")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -90,6 +90,7 @@ class TestAdditionalFilters:
             assert_status_code(response.status_code, HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Update additional filters without access-token")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -123,6 +124,7 @@ class TestAdditionalFilters:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Delete additional filters without access-token")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

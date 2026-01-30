@@ -6,6 +6,7 @@ class APIRoutes(str, Enum):
     ADDITIONAL_FILTERS = '/api/additional_filters/'
     BALANCING = '/api/balancing/'
     CUSTOM_CONFIG = '/api/custom_config/'
+    FILTERS = '/api/filters/'
 
     def __str__(self):
         return self.value

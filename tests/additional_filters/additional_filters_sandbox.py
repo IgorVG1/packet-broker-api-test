@@ -2,6 +2,7 @@ import requests
 
 from clients.authentication.authentication_client import get_authentication_client
 from clients.authentication.authentication_schema import LoginRequestSchema
+from config import settings
 
 
 def delete_additional_filters():
@@ -9,7 +10,7 @@ def delete_additional_filters():
     authentication_request = LoginRequestSchema()
     authentication_response = public_users_client.login(request=authentication_request)
 
-    delete_additional_filters_response = requests.delete(url='http://192.168.7.57/api/additional_filters/',
+    delete_additional_filters_response = requests.delete(url=f'{settings.http_client.client_url}/api/additional_filters/',
                                                          headers={"Authorization": f"Bearer {authentication_response.access}"},
                                                          json=[
                                                              {

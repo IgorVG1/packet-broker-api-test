@@ -9,6 +9,7 @@ from clients.api_session import APISession
 from clients.balancing.balancing_schema import CreateBalancingRequestSchema, UpdateBalancingRequestSchema, \
     DeleteBalancingRequestSchema
 from clients.public_http_builder import get_public_http_client, get_public_http_session
+from config import settings
 from tools.routes import APIRoutes
 from clients.api_coverage import tracker
 
@@ -106,7 +107,7 @@ class PublicSession(APISession):
         :param request: Список словарей с value: str, direction: str, logic_group (logicGroup): int, type: str.
         :return: Объект requests_Response с данными ответа.
         """
-        return self.delete(url='http://192.168.7.57/api/additional_filters/',
+        return self.delete(url=f'{settings.http_client.client_url}/api/additional_filters/',
                            json=request.model_dump())
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -120,7 +121,7 @@ class PublicSession(APISession):
         :param request: Словарь с logic_group (logicGroup).
         :return: Объект requests_Response с данными ответа.
         """
-        return self.delete(url='http://192.168.7.57/api/balancing/',
+        return self.delete(url=f'{settings.http_client.client_url}/api/balancing/',
                            json=request.model_dump(by_alias=True))
 
 #-----------------------------------------------------------------------------------------------------------------------

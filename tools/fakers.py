@@ -18,8 +18,22 @@ class Fake:
         return self.faker.ipv4()
 
     def boolean(self) -> bool:
+        """
+        Генерирует случайный boolean.
+
+        :return: Случайный bool.
+        """
         return self.faker.boolean()
 
 
+    def filtration_type(self) -> str:
+        """
+        Генерирует случайный filtration_type.
+
+        :return: Случайный "pass"/"miss".
+        """
+        return self.faker.random_element(["pass","miss"])
+
+
 fake = Fake(faker=Faker(locale='ru_Ru'))
-print(fake.boolean())
+print(fake.filtration_type())
