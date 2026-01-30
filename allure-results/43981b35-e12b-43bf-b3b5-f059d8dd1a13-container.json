@@ -1,0 +1,1 @@
+{"uuid": "a714f40f-9d6e-41cb-bc82-1899000a9724", "children": ["c3a5e8fe-f147-46e8-bdee-dcea69c1bcab"], "befores": [{"name": "authentication_client", "status": "passed", "start": 1769772076037, "stop": 1769772076172}], "start": 1769772076037, "stop": 1769772077073}

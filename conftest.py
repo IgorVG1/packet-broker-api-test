@@ -8,4 +8,5 @@ pytest_plugins = (
     'fixtures.balancing',
     'fixtures.custom_config',
     'fixtures.filters',
+    'fixtures.mirroring',
 )

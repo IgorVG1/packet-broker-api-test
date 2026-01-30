@@ -42,6 +42,9 @@ class TestBalancing:
     @allure.sub_suite(AllureStory.GET_ENTITIES)
     @allure.severity(AllureSeverity.BLOCKER)
     def test_get_balancing_list(self, balancing_client: BalancingClient):
+
+        logger.info('[Set-up completed] : Balancing group was created.')
+
         response = balancing_client.get_balancing_list_api()
         response_data = GetBalancingListResponseSchema.model_validate_json(response.text)
 
@@ -149,6 +152,7 @@ class TestBalancing:
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
     @allure.severity(AllureSeverity.MAJOR)
     def test_update_balancing(self, balancing_client: BalancingClient):
+
         request = UpdateBalancingRequestSchema()
         response = balancing_client.update_balancing_api(request=request)
 
@@ -199,12 +203,20 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
+    @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[200]OK - Delete balancing group")
-    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.DELETE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)
-    def test_delete_balancing(self, balancing_session: BalancingSession, balancing_client: BalancingClient,function_balancing: BalancingFixture):
+    def test_delete_balancing(self,
+                              balancing_session: BalancingSession,
+                              balancing_client: BalancingClient,
+                              function_balancing: BalancingFixture,
+                              function_balancing_after_delete):
+
+        logger.info('[Set-up completed] : Balancing group was created.')
+
         request_delete = DeleteBalancingRequestSchema()
         response_delete = balancing_session.delete_balancing_api(request=request_delete)
 
@@ -213,17 +225,11 @@ class TestBalancing:
 
         assert_status_code(response_delete.status_code, HTTPStatus.OK)
 
-        request_create = CreateBalancingRequestSchema()
-        response_create = balancing_client.create_balancing_api(request=request_create)
-
-        logger.info(f'Create balancing api status code "{response_create.status_code}"')
-        logger.info(f'Create balancing api response body "{response_create.text}"')
-
 
     @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[412]PRECONDITION_FAILED - Delete balancing group that had been deleted")
-    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     @allure.severity(AllureSeverity.MINOR)

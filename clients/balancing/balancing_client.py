@@ -78,7 +78,7 @@ class BalancingSession(APISession):
         :param request: Словарь с logic_group (logicGroup).
         :return: Объект requests_Response с данными ответа.
         """
-        return self.delete(url=f'{settings.http_client.client_url}/api/balancing/',
+        return self.delete(url=f'{settings.http_client.client_url}{APIRoutes.BALANCING}',
                            json=request.model_dump(by_alias=True))
 
 

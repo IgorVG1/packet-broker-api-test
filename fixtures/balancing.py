@@ -4,6 +4,10 @@ from clients.balancing.balancing_client import BalancingClient, get_balancing_cl
     get_balancing_session
 from clients.balancing.balancing_schema import CreateBalancingRequestSchema
 from fixtures.authentication import UserFixture
+from tools.logger import get_logger
+
+
+logger = get_logger(name='BALANCING_FIXTURE')
 
 
 class BalancingFixture(BaseModel):
@@ -32,3 +36,5 @@ def function_balancing_after_delete(balancing_client: BalancingClient):
     yield
     request_create = CreateBalancingRequestSchema()
     balancing_client.create_balancing_api(request=request_create)
+
+    logger.info('[Tear-down completed] : Created balancing group was deleted.')

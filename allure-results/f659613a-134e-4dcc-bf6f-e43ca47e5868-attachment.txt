@@ -1,0 +1,11 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/mirroring/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/mirroring/"
+[32mINFO    [0m MIRRORING:test_mirroring.py:125 [Set-up completed] : Mirroring group was created.
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/mirroring/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 412 Precondition Failed from "http://192.168.7.57/api/mirroring/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m MIRRORING_ASSERTIONS:mirroring_assertions.py:108 Check create already creating mirroring group response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "text" - equals to ""Такая группа зеркалирования уже существует""
+[32mINFO    [0m MIRRORING_FIXTURE:mirroring.py:61 [Tear-down completed] : Created mirroring group was deleted.

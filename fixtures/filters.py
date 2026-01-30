@@ -55,10 +55,3 @@ def function_filters_tear_down(filters_session: FiltersSession):
     yield
     request = FILTERS_FOR_DELETE.model_dump(by_alias=True)
     filters_session.delete_filters_api(request=request)
-
-
-# @pytest.fixture(scope='function')
-# def function_balancing_after_delete(balancing_client: BalancingClient):
-#     yield
-#     request_create = CreateBalancingRequestSchema()
-#     balancing_client.create_balancing_api(request=request_create)

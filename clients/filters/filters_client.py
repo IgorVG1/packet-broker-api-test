@@ -71,7 +71,7 @@ class FiltersSession(APISession):
         :param request: Список словарей на основе модели DeleteFilterSchema.
         :return: Объект requests.Response с данными ответа.
         """
-        return self.delete(url=f'{settings.http_client.client_url}/api/filters/',
+        return self.delete(url=f'{settings.http_client.client_url}{APIRoutes.FILTERS}',
                            json=request)
 
 

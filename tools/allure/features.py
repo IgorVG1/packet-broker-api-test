@@ -8,3 +8,4 @@ class AllureFeature(str, Enum):
     BALANCING = "BALANCING"
     CUSTOM_CONFIG = "CUSTOM_CONFIG"
     FILTERS = "FILTERS"
+    MIRRORING = "MIRRORING"

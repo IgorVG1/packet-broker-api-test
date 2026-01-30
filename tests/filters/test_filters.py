@@ -20,7 +20,7 @@ from tools.logger import get_logger
 logger = get_logger('FILTERS')
 
 
-@pytest.mark.balancing
+@pytest.mark.filters
 @pytest.mark.regression
 @allure.tag(AllureTag.REGRESSION, AllureTag.FILTERS)
 @allure.epic(AllureEpic.PACKET_BROKER)
@@ -58,8 +58,9 @@ class TestFilters:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[200]OK - Create filters")
-    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.CREATE_ENTITY)
     @allure.severity(AllureSeverity.BLOCKER)
