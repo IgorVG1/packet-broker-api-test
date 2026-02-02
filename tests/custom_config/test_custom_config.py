@@ -30,6 +30,7 @@ logger = get_logger('CUSTOM_CONFIG')
 @allure.suite(AllureFeature.CUSTOM_CONFIG)
 class TestCustomConfig:
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
     @allure.title("[200]OK - Download custom config from switch")
     @allure.tag(AllureTag.GET_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITY)
@@ -63,6 +64,7 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
     @pytest.mark.flaky(reruns=3, reruns_delay=5)
     @allure.title("[200]OK - Upload my custom config to the switch")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
@@ -118,6 +120,7 @@ class TestCustomConfig:
         assert_upload_broken_custom_config(response_text=response_text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
     @allure.title("[200]OK - Saving actual custom config")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -147,6 +150,7 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
     @allure.title("[200]OK - Restore saved custom config")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

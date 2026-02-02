@@ -33,6 +33,8 @@ logger = get_logger('PORTS')
 @allure.suite(AllureFeature.PORTS)
 class TestPorts:
 
+
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
     @allure.title("[200]OK - Get configured ports list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -73,6 +75,7 @@ class TestPorts:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
     @allure.title("[200]OK - Get possible ports list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -89,6 +92,7 @@ class TestPorts:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
     @allure.title("[403]FORBIDDEN - Get possible ports list by unauthorised user")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -107,6 +111,7 @@ class TestPorts:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
     @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title("[200]OK - Create configured ports")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
@@ -164,6 +169,7 @@ class TestPorts:
         assert_create_port_with_incorrect_body(response=response)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
     @allure.title("[200]OK - Update configured ports")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -213,6 +219,7 @@ class TestPorts:
         assert_update_nonexistent_port(response=response)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
     @allure.title("[200]OK - Delete configured ports")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

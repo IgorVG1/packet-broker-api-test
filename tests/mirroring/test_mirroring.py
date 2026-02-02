@@ -34,6 +34,7 @@ logger = get_logger('MIRRORING')
 @allure.suite(AllureFeature.MIRRORING)
 class TestMirroring:
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.mirroring}")
     @allure.title("[200]OK - Get mirroring list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -73,7 +74,7 @@ class TestMirroring:
                              schema=response_data.model_json_schema())
 
 
-
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.mirroring}")
     @allure.title("[200]OK - Create mirroring group")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -134,6 +135,7 @@ class TestMirroring:
         assert_create_already_creating_mirroring_group_response(response_text=response_text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.mirroring}")
     @allure.title("[200]OK - Update mirroring group")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -198,6 +200,7 @@ class TestMirroring:
             assert_change_nonexistent_mirroring_group_response(response_text=response_text)
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.mirroring}")
     @allure.title("[200]OK - Delete mirroring group")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

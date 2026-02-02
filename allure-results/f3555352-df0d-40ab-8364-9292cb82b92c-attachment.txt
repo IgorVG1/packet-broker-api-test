@@ -1,0 +1,7 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:13 Make "POST" request to "http://192.168.7.57/api/ports/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:22 Got response 412 Precondition Failed from "http://192.168.7.57/api/ports/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m PORTS_ASSERTIONS:ports_assertions.py:65 Check response of create port with incorrect body
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "text" - equals to ""Неверно заданы поля JSON. Запрос некорректен""

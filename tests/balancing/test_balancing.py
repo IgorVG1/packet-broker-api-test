@@ -36,6 +36,7 @@ logger = get_logger('BALANCING')
 class TestBalancing:
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
     @allure.title("[200]OK - Get balancing list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -69,6 +70,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
     @allure.title("[200]OK - Create balancing group")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -146,6 +148,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
     @allure.title("[200]OK - Update balancing group")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -203,6 +206,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
     @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[200]OK - Delete balancing group")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
