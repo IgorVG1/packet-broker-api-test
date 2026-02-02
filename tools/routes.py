@@ -8,6 +8,7 @@ class APIRoutes(str, Enum):
     CUSTOM_CONFIG = '/api/custom_config/'
     FILTERS = '/api/filters/'
     MIRRORING = '/api/mirroring/'
+    PORTS = '/api/ports/'
 
     def __str__(self):
         return self.value

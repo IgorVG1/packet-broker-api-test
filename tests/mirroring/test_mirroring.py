@@ -21,6 +21,7 @@ from tools.assertions.errors import assert_error_for_not_authenticated_user
 from tools.assertions.schema import validate_json_schema
 from tools.logger import get_logger
 
+
 logger = get_logger('MIRRORING')
 
 

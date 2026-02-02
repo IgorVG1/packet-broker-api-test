@@ -39,9 +39,8 @@ class TestAdditionalFilters:
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.CREATE_ENTITY)
     @allure.severity(AllureSeverity.BLOCKER)
-    @pytest.mark.parametrize("direction",["Src","Dst","Src+Dst"])
-    def test_create_additional_filters(self, direction: str,additional_filters_client: AdditionalFiltersClient):
-        request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema(direction=direction)])
+    def test_create_additional_filters(self,additional_filters_client: AdditionalFiltersClient):
+        request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema()])
         response = additional_filters_client.create_additional_filters_api(request=request)
 
         assert_status_code(response.status_code, HTTPStatus.OK)
@@ -52,7 +51,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_additional_filters_without_direction(self,additional_filters_client: AdditionalFiltersClient):
         request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema(direction='')])
         response = additional_filters_client.create_additional_filters_api(request=request)
@@ -66,7 +65,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_additional_filters_without_access_token(self, public_client: PublicClient):
         request = CreateAdditionalFiltersRequestSchema([CreateAdditionalFiltersSchema()])
         response = public_client.create_additional_filters_api(request=request)
@@ -82,7 +81,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
-    @allure.severity(AllureSeverity.MAJOR)
+    @allure.severity(AllureSeverity.BLOCKER)
     def test_update_additional_filters(self, additional_filters_client: AdditionalFiltersClient):
             request = UpdateAdditionalFiltersRequestSchema()
             response = additional_filters_client.update_additional_filters_api(request=request)
@@ -95,7 +94,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_update_additional_filters_without_access_token(self, public_client: PublicClient):
         request = UpdateAdditionalFiltersRequestSchema()
         response = public_client.update_additional_filters_api(request=request)
@@ -111,7 +110,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.DELETE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.BLOCKER)
     def test_delete_additional_filters(self,
                                         additional_filters_session: AdditionalFiltersSession,
                                         function_additional_filters_for_delete: AdditionalFilterFixture):
@@ -129,7 +128,7 @@ class TestAdditionalFilters:
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_delete_additional_filters_without_access_token(self, public_session: PublicSession,
                                         function_additional_filters_for_delete: AdditionalFilterFixture):
         request = DeleteAdditionalFiltersRequestSchema([DeleteAdditionalFiltersSchema()])

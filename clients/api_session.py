@@ -15,7 +15,7 @@ class APISession:
     @allure.step('Make DELETE-request to {url}')
     def delete(self,
                url: str,
-               json: Any
+               json: Any | None = None,
                ) -> Response:
         """
         Выполняет DELETE-запрос.

@@ -2,9 +2,13 @@ import pytest
 from pydantic import BaseModel
 from clients.filters.filters_client import FiltersClient, FiltersSession, get_filters_client, get_filters_session, \
     get_unauthorised_filters_client, get_unauthorised_filters_session
-from clients.filters.filters_schema import CreateFiltersRequestSchema, CreateFilterSchema
+from clients.filters.filters_schema import CreateFilterSchema
 from fixtures.authentication import UserFixture
 from tests.filters.filters_data import FILTERS_FOR_DELETE
+from tools.logger import get_logger
+
+
+logger = get_logger('FILTERS_FIXTURE')
 
 
 class FiltersFixture(BaseModel):
@@ -50,8 +54,9 @@ def function_filters_tear_down(filters_session: FiltersSession):
     Фикстура для удаления созданных фильтров по окончании теста.
 
     :param filters_session: Фикстура с подготовленной сессией для работы с /api/filters/.
-    :return: Pydantic-модель, хранящая в себе информацию о запросе на загрузку конфигурации.
     """
     yield
     request = FILTERS_FOR_DELETE.model_dump(by_alias=True)
     filters_session.delete_filters_api(request=request)
+
+    logger.info('[Tear-down completed] : Created filter was deleted.')

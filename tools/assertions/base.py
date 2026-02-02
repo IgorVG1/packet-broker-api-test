@@ -41,6 +41,44 @@ def assert_equal(actual: Any, expected: Any, name: str):
             f'Actual value:     "{actual}"'
         )
 
+
+@allure.step('Check object: {name} - equals to one of {expected_list}')
+def assert_equal_in_expected_list(equal: Any, expected_list: Sized, name: str):
+    """
+    Проверяет, что фактическое значение равно одному из списка ожидаемых.
+
+    :param name: Название проверяемого значения.
+    :param equal: Фактическое значение.
+    :param expected_list: Ожидаемое значение.
+    :raises AssertionError: Если фактическое значение не равно ожидаемому.
+    """
+    logger.info(f'Check object: "{name}" - equals to one of "{expected_list}"')
+    assert equal in expected_list, \
+        (
+            f'Incorrect value:  "{name}"'
+            f'\nExpected list: "{expected_list}"'
+            f'Equal value:     "{equal}"'
+        )
+
+
+@allure.step('Check object: {name} - equals to one of {expected_list}')
+def assert_equal_in_expected_list_no_logs(equal: Any, expected_list: Sized, name: str):
+    """
+    Проверяет, что фактическое значение равно одному из списка ожидаемых.
+
+    :param name: Название проверяемого значения.
+    :param equal: Фактическое значение.
+    :param expected_list: Ожидаемое значение.
+    :raises AssertionError: Если фактическое значение не равно ожидаемому.
+    """
+    assert equal in expected_list, \
+        (
+            f'Incorrect value:  "{name}"'
+            f'\nExpected list: "{expected_list}"'
+            f'Equal value:     "{equal}"'
+        )
+
+
 def assert_is_true(actual: Any, name: str):
     """
     Проверяет, что фактическое значение является истинным.

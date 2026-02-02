@@ -1,9 +1,11 @@
+from typing import List
+
 import allure
 from httpx import Response
 
 from clients.mirroring.mirroring_schema import GetMirroringResponseSchema, MirroringSchema, \
     CreateMirroringRequestSchema, UpdateMirroringRequestSchema
-from tools.assertions.base import assert_equal, assert_length
+from tools.assertions.base import assert_equal, assert_length, assert_equal_in_expected_list
 from tools.logger import get_logger
 
 logger = get_logger("MIRRORING_ASSERTIONS")
@@ -106,10 +108,13 @@ def assert_create_already_creating_mirroring_group_response(response_text: str):
     :raises AssertionError: Если хотя бы одно поле не совпадает.
     """
     logger.info('Check create already creating mirroring group response')
-
-    assert_equal(actual=response_text,
-                 expected='"Такая группа зеркалирования уже существует"',
-                 name='text')
+    expected_values: List[str] = [
+        '"Такая группа зеркалирования уже существует"',
+        '"Данная группа зеркалирования имеет правила фильтрации зеркалирования"'
+    ]
+    assert_equal_in_expected_list(equal=response_text,
+                                  expected_list=expected_values ,
+                                  name='text')
 
 
 @allure.step('Check change (update/delete) nonexistent mirroring group response')

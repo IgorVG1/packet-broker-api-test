@@ -63,7 +63,7 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.flaky(reruns=3, reruns_delay=3)
+    @pytest.mark.flaky(reruns=3, reruns_delay=5)
     @allure.title("[200]OK - Upload my custom config to the switch")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)

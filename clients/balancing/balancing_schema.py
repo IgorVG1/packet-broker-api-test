@@ -17,7 +17,7 @@ class BalancingListSchema(BaseModel):
 
 class GetBalancingListResponseSchema(RootModel):
     """
-    Описание структуры запроса на создание балансировок групп.
+    Описание структуры ответа на получение списка групп балансировок.
     Attributes:
         List[BalancingListSchema] - Список балансировок групп
     """

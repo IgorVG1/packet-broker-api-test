@@ -9,4 +9,5 @@ pytest_plugins = (
     'fixtures.custom_config',
     'fixtures.filters',
     'fixtures.mirroring',
+    'fixtures.ports',
 )

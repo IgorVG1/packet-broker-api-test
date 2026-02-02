@@ -17,6 +17,7 @@ class Fake:
         """
         return self.faker.ipv4()
 
+
     def boolean(self) -> bool:
         """
         Генерирует случайный boolean.
@@ -33,6 +34,15 @@ class Fake:
         :return: Случайный "pass"/"miss".
         """
         return self.faker.random_element(["pass","miss"])
+
+
+    def port_name(self) -> str:
+        """
+        Генерирует случайный port_name.
+
+        :return: Случайное имя сконфигурированного порта.
+        """
+        return self.faker.color_name()
 
 
 fake = Fake(faker=Faker(locale='ru_Ru'))

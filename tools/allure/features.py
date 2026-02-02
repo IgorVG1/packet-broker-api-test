@@ -9,3 +9,4 @@ class AllureFeature(str, Enum):
     CUSTOM_CONFIG = "CUSTOM_CONFIG"
     FILTERS = "FILTERS"
     MIRRORING = "MIRRORING"
+    PORTS = "PORTS"

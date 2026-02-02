@@ -14,6 +14,21 @@ class APIClient:
         """
         self.client = client
 
+    @allure.step('Make OPTIONS-request to {url}')
+    def options(self,
+                url: str | URL,
+                params: Optional[QueryParams] = None
+                ) -> Response:
+        """
+        Выполняет OPTIONS-запрос.
+
+        :param url: URL-адрес эндпоинта.
+        :param params: OPTIONS-параметры запроса (например, ?key=value).
+        :return: Объект Response с данными ответа.
+        """
+        return self.client.options(url=url,
+                                   params=params)
+
     @allure.step('Make GET-request to {url}')
     def get(self,
             url: str | URL,
