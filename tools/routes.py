@@ -12,6 +12,7 @@ class APIRoutes(str, Enum):
     MIRRORING = '/api/mirroring/'
     PORTS = '/api/ports/'
     LOOPBACK_PORTS = '/api/loopback_ports/'
+    INGRESS_GROUPS = '/api/ingress_groups/'
 
     def __str__(self):
         return self.value

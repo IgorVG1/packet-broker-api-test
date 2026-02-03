@@ -64,8 +64,6 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
-
-    @pytest.mark.order("last")
     @pytest.mark.flaky(reruns=3, reruns_delay=5)
     @allure.title("[200]OK - Upload my custom config to the switch")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
@@ -105,7 +103,6 @@ class TestCustomConfig:
 
 
     # @pytest.mark.skip(reason='Тест ломает коммутатор')
-    @pytest.mark.order("second_to_last")
     @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title('[412]PRECONDITION_FAILED - Upload my "broken" custom config to the switch')
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST, AllureTag.FLAKY_TEST)

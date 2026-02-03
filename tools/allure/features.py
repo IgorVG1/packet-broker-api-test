@@ -13,3 +13,4 @@ class AllureFeature(str, Enum):
     MIRRORING = "MIRRORING"
     PORTS = "PORTS"
     LOOPBACK_PORTS = "LOOPBACK_PORTS"
+    INGRESS_GROUPS = "INGRESS_GROUPS"

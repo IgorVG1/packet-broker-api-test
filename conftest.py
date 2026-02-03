@@ -12,4 +12,5 @@ pytest_plugins = (
     'fixtures.mirroring',
     'fixtures.ports',
     'fixtures.loopback_ports',
+    'fixtures.ingress_groups',
 )
