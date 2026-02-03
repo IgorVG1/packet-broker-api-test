@@ -8,6 +8,7 @@ class APIRoutes(str, Enum):
     CUSTOM_CONFIG = '/api/custom_config/'
     DEFAULT_CONFIG = '/api/default_config/'
     FILTERS = '/api/filters/'
+    ALL_FILTERS = '/api/all_filters/'
     MIRRORING = '/api/mirroring/'
     PORTS = '/api/ports/'
     LOOPBACK_PORTS = '/api/loopback_ports/'

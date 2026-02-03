@@ -31,13 +31,6 @@ class XdistGroupNamesConfig(BaseModel):
     """
     negative_tests: str = Field(description='Поток авто-тестов для проверки негативных сценариев')
 
-    additional_filters: str = Field(description='Поток авто-тестов для проверки /api/additional_filters/')
-    balancing: str = Field(description='Поток авто-тестов для проверки /api/balancing/')
-    custom_config: str = Field(description='Поток авто-тестов для проверки /api/custom_config/')
-    filters: str = Field(description='Поток авто-тестов для проверки /api/filters/')
-    mirroring: str = Field(description='Поток авто-тестов для проверки /api/mirroring/')
-    ports: str = Field(description='Поток авто-тестов для проверки /api/ports/')
-
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(

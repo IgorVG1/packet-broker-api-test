@@ -45,6 +45,17 @@ class FiltersClient(APIClient):
                          json=[request.model_dump(by_alias=True)])
 
 
+    @allure.step('Delete all filters group')
+    @tracker.track_coverage_httpx(f'{APIRoutes.ALL_FILTERS}')
+    def delete_all_filters_api(self) -> Response:
+        """
+        Метод очистки списка фильтраций.
+
+        :return: Объект Response с данными ответа.
+        """
+        return self.delete(url=f'{APIRoutes.ALL_FILTERS}')
+
+
 def get_filters_client(user: AuthenticationUserSchema) -> FiltersClient:
     """
     Функция создаёт экземпляр FiltersClient с уже настроенным HTTP-клиентом.

@@ -122,3 +122,32 @@ class TestFilters:
         assert_error_for_not_authenticated_user(response=response_data)
         validate_json_schema(instance=response.json(),
                              schema=response_data.model_json_schema())
+
+
+    @pytest.mark.xfail(reason="Найден БАГ: [404]NOT_FOUND - Nothing matches the given URI\n")
+    @allure.title("[200]OK - Delete all filters")
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.DELETE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_delete_all_filters(self,
+                                function_filters: FiltersFixture,
+                                filters_client: FiltersClient):
+        response = filters_client.delete_all_filters_api()
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+
+    @pytest.mark.xfail(reason="Найден БАГ: [404]NOT_FOUND - Nothing matches the given URI\n")
+    @allure.title("[403]FORBIDDEN - Delete all filters by authorised user")
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.DELETE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_delete_all_filters_by_authorised_user(self, unauthorised_filters_client: FiltersClient):
+
+        response = unauthorised_filters_client.delete_all_filters_api()
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.FORBIDDEN)
