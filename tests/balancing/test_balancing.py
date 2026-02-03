@@ -36,7 +36,7 @@ logger = get_logger('BALANCING')
 class TestBalancing:
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
+
     @allure.title("[200]OK - Get balancing list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -60,7 +60,7 @@ class TestBalancing:
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_get_balancing_list_without_access_token(self, public_client: PublicClient):
         response = public_client.get_balancing_list_api()
         response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
@@ -70,7 +70,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
+
     @allure.title("[200]OK - Create balancing group")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -95,7 +95,7 @@ class TestBalancing:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_balancing_for_created_balancing_group(self, balancing_client: BalancingClient):
         request = CreateBalancingRequestSchema()
         response = balancing_client.create_balancing_api(request=request)
@@ -109,7 +109,7 @@ class TestBalancing:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_balancing_without_logic_id(self, balancing_client: BalancingClient):
         request = CreateBalancingRequestSchema(logic_id="")
         response = balancing_client.create_balancing_api(request=request)
@@ -123,7 +123,7 @@ class TestBalancing:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_balancing_without_balance_type(self, balancing_client: BalancingClient):
         request = CreateBalancingRequestSchema(balance_type="")
         response = balancing_client.create_balancing_api(request=request)
@@ -137,7 +137,7 @@ class TestBalancing:
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_create_balancing_without_access_token(self, public_client: PublicClient):
         request = CreateBalancingRequestSchema()
         response = public_client.create_balancing_api(request=request)
@@ -148,7 +148,7 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
+
     @allure.title("[200]OK - Update balancing group")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -167,7 +167,7 @@ class TestBalancing:
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_update_balancing_without_logic_id(self, balancing_client: BalancingClient):
         request = UpdateBalancingRequestSchema(logic_id="")
         response = balancing_client.update_balancing_api(request=request)
@@ -181,7 +181,7 @@ class TestBalancing:
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_update_balancing_without_balance_type(self, balancing_client: BalancingClient):
         request = UpdateBalancingRequestSchema(balance_type="")
         response = balancing_client.update_balancing_api(request=request)
@@ -195,7 +195,7 @@ class TestBalancing:
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_update_balancing_without_access_token(self, public_client: PublicClient):
         request = UpdateBalancingRequestSchema()
         response = public_client.update_balancing_api(request=request)
@@ -206,13 +206,13 @@ class TestBalancing:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.balancing}")
+
     @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[200]OK - Delete balancing group")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.DELETE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_delete_balancing(self,
                               balancing_session: BalancingSession,
                               balancing_client: BalancingClient,
@@ -236,7 +236,7 @@ class TestBalancing:
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_delete_had_been_deleted_balancing(self, balancing_session: BalancingSession, function_balancing: BalancingFixture, function_balancing_after_delete):
 
         request = DeleteBalancingRequestSchema(logic_group=function_balancing.request.logic_id)
@@ -252,7 +252,7 @@ class TestBalancing:
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_delete_without_logic_group(self, balancing_session: BalancingSession):
 
         request = DeleteBalancingRequestSchema(logic_group="")
@@ -267,7 +267,7 @@ class TestBalancing:
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
-    @allure.severity(AllureSeverity.MINOR)
+    @allure.severity(AllureSeverity.MAJOR)
     def test_delete_balancing_without_access_token(self, public_session: PublicSession):
         request = DeleteBalancingRequestSchema()
         response = public_session.delete_balancing_api(request=request)

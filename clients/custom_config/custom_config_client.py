@@ -1,6 +1,8 @@
+import allure
 from httpx import Response
 
 from clients.api_client import APIClient
+from clients.api_coverage import tracker
 from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema
 from clients.public_http_builder import get_public_http_client
@@ -9,9 +11,11 @@ from tools.routes import APIRoutes
 
 class CustomConfigClient(APIClient):
     """
-    Клиент для работы с /api/custom_config/
+    Клиент для работы с /api/custom_config/ (/api/default_config/)
     """
 
+    @allure.step('Download custom config')
+    @tracker.track_coverage_httpx(f'{APIRoutes.CUSTOM_CONFIG}')
     def download_custom_config_api(self) -> Response:
         """
         Метод скачивания текущей конфигурации в формате JSON файла.
@@ -22,6 +26,8 @@ class CustomConfigClient(APIClient):
         return self.get(url=f'{APIRoutes.CUSTOM_CONFIG}')
 
 
+    @allure.step('Upload custom config')
+    @tracker.track_coverage_httpx(f'{APIRoutes.CUSTOM_CONFIG}')
     def upload_custom_config_api(self, request: UploadCustomConfigRequestSchema) -> Response:
         """
         Метод загрузки на коммутатор пользовательского конфигурационного файла формате JSON.
@@ -34,6 +40,8 @@ class CustomConfigClient(APIClient):
                          files={"config": request.config.read_bytes()})
 
 
+    @allure.step('Saving custom config')
+    @tracker.track_coverage_httpx(f'{APIRoutes.CUSTOM_CONFIG}')
     def saving_custom_config_api(self) -> Response:
         """
         Метод сохранения текущей конфигурации коммутатора.
@@ -44,6 +52,8 @@ class CustomConfigClient(APIClient):
         return self.put(url=f'{APIRoutes.CUSTOM_CONFIG}')
 
 
+    @allure.step('Restore custom config')
+    @tracker.track_coverage_httpx(f'{APIRoutes.CUSTOM_CONFIG}')
     def restore_custom_config_api(self) -> Response:
         """
         Метод применения сохраненной конфигурации.
@@ -52,6 +62,18 @@ class CustomConfigClient(APIClient):
         :return: Ответ от сервера в виде объекта httpx.Response.
         """
         return self.delete(url=f'{APIRoutes.CUSTOM_CONFIG}')
+
+
+    @allure.step('Return default config')
+    @tracker.track_coverage_httpx(f'{APIRoutes.DEFAULT_CONFIG}')
+    def return_default_config(self) -> Response:
+        """
+        Метод применения конфигурации по умолчанию.
+        "Вернуть конфигурацию по умолчанию"
+
+        :return: Ответ от сервера в виде объекта httpx.Response.
+        """
+        return self.delete(url=f'{APIRoutes.DEFAULT_CONFIG}')
 
 
 def get_custom_config_client(user: AuthenticationUserSchema) -> CustomConfigClient:

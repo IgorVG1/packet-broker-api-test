@@ -34,7 +34,7 @@ logger = get_logger('ADDITIONAL_FILTERS')
 class TestAdditionalFilters:
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.additional_filters}")
+
     @allure.title("[200]OK - Create additional filters")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -78,7 +78,7 @@ class TestAdditionalFilters:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.additional_filters}")
+
     @allure.title("[200]OK - Update additional filters")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -108,7 +108,7 @@ class TestAdditionalFilters:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.additional_filters}")
+
     @allure.title("[200]OK - Delete additional filters")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

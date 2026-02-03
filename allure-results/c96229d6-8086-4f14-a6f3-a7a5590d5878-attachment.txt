@@ -1,0 +1,7 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "DELETE" request to "http://192.168.7.57/api/default_config/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/default_config/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "200"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/custom_config/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/custom_config/"

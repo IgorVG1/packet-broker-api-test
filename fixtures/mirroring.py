@@ -59,3 +59,18 @@ def function_mirroring_tear_down(mirroring_session: MirroringSession):
     mirroring_session.delete_mirroring_api(request=request)
 
     logger.info('[Tear-down completed] : Created mirroring group was deleted.')
+
+
+@pytest.fixture(scope='function')
+def function_mirroring_set_up(mirroring_session: MirroringSession):
+    """
+    Фикстура для удаления созданной группы зеркалирования перед запуском теста.
+
+    :param mirroring_session: Фикстура с подготовленной сессией для работы с /api/mirroring/.
+    """
+    try:
+        request = DeleteMirroringRequestSchema()
+        mirroring_session.delete_mirroring_api(request=request)
+    finally:
+        logger.info('[Tear-down completed] : Created mirroring group was deleted.')
+    yield

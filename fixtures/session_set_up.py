@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from clients.authentication.authentication_client import get_authentication_client
@@ -7,7 +9,7 @@ from clients.custom_config.custom_config_schema import UploadCustomConfigRequest
 from clients.private_http_builder import AuthenticationUserSchema
 from tools.logger import get_logger
 
-logger = get_logger(name='SESSION_SETUP')
+logger = get_logger(name='SESSION_SET-UP')
 
 
 @pytest.fixture(scope='session', autouse=True)

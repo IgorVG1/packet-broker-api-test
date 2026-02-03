@@ -29,7 +29,7 @@ logger = get_logger('FILTERS')
 @allure.suite(AllureFeature.FILTERS)
 class TestFilters:
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.filters}")
+
     @allure.title("[200]OK - Get filters list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -59,7 +59,7 @@ class TestFilters:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.filters}")
+
     @pytest.mark.flaky(reruns=3, reruns_delay=3)
     @allure.title("[200]OK - Create filters")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
@@ -92,7 +92,7 @@ class TestFilters:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.filters}")
+
     @allure.title("[200]OK - Delete filters")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)

@@ -19,6 +19,8 @@ class FiltersClient(APIClient):
     Клиент для работы с /api/filters/
     """
 
+    @allure.step('Get filters list')
+    @tracker.track_coverage_httpx(f'{APIRoutes.FILTERS}')
     def get_filters_api(self) -> Response:
         """
         Метод получения списка сконфигурированных фильтров.
@@ -29,6 +31,8 @@ class FiltersClient(APIClient):
         return self.get(url=f'{APIRoutes.FILTERS}')
 
 
+    @allure.step('Create filters')
+    @tracker.track_coverage_httpx(f'{APIRoutes.FILTERS}')
     def create_filters_api(self, request: CreateFilterSchema) -> Response:
         """
         Метод добавления фильтров.

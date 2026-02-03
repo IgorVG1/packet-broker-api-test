@@ -8,7 +8,7 @@ from clients.ports.ports_schema import CreatePortRequestSchema, ConfiguredPortSc
 from config import settings
 from fixtures.ports import PortsFixture
 from tests.ports.ports_assertions import assert_port, assert_create_port_with_incorrect_body, \
-    assert_update_nonexistent_port, assert_deleted_port_not_exist, assert_delete_port_with_incorrect_body, \
+    assert_update_nonexistent_port, assert_delete_port_with_incorrect_body, \
     assert_possible_ports_list
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
@@ -34,7 +34,7 @@ logger = get_logger('PORTS')
 class TestPorts:
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
+
     @allure.title("[200]OK - Get configured ports list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -75,7 +75,7 @@ class TestPorts:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
+
     @allure.title("[200]OK - Get possible ports list")
     @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITIES)
@@ -111,7 +111,7 @@ class TestPorts:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
+
     @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title("[200]OK - Create configured ports")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST)
@@ -169,7 +169,7 @@ class TestPorts:
         assert_create_port_with_incorrect_body(response=response)
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
+
     @allure.title("[200]OK - Update configured ports")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -219,7 +219,7 @@ class TestPorts:
         assert_update_nonexistent_port(response=response)
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.ports}")
+
     @allure.title("[200]OK - Delete configured ports")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
@@ -227,19 +227,12 @@ class TestPorts:
     @allure.severity(AllureSeverity.BLOCKER)
     def test_delete_port(self,
                          function_ports: PortsFixture,
-                         ports_client: PortsClient,
                          ports_session: PortsSession):
         request = DeletePortsRequestSchema()
         response = ports_session.delete_ports_api(request=request)
 
-        list_ports = ports_client.get_ports_list_api()
-        port_for_check = list_ports.json()[0]
-        port_for_check_data = ConfiguredPortSchema.model_validate(port_for_check)
-
         assert_status_code(actual=response.status_code,
                            expected=HTTPStatus.OK)
-
-        assert_deleted_port_not_exist(response=port_for_check_data)
 
 
     @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")

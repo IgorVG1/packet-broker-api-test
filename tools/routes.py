@@ -6,9 +6,11 @@ class APIRoutes(str, Enum):
     ADDITIONAL_FILTERS = '/api/additional_filters/'
     BALANCING = '/api/balancing/'
     CUSTOM_CONFIG = '/api/custom_config/'
+    DEFAULT_CONFIG = '/api/default_config/'
     FILTERS = '/api/filters/'
     MIRRORING = '/api/mirroring/'
     PORTS = '/api/ports/'
+    LOOPBACK_PORTS = '/api/loopback_ports/'
 
     def __str__(self):
         return self.value

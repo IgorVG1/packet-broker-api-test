@@ -1,5 +1,6 @@
 pytest_plugins = (
     'fixtures.session_set_up',
+    'fixtures.session_tear_down',
     'fixtures.allure',
 
     'fixtures.public',
@@ -10,4 +11,5 @@ pytest_plugins = (
     'fixtures.filters',
     'fixtures.mirroring',
     'fixtures.ports',
+    'fixtures.loopback_ports',
 )

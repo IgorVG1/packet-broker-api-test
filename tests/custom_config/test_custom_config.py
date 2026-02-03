@@ -30,7 +30,7 @@ logger = get_logger('CUSTOM_CONFIG')
 @allure.suite(AllureFeature.CUSTOM_CONFIG)
 class TestCustomConfig:
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
+
     @allure.title("[200]OK - Download custom config from switch")
     @allure.tag(AllureTag.GET_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.GET_ENTITY)
@@ -64,7 +64,8 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
+
+    @pytest.mark.order("last")
     @pytest.mark.flaky(reruns=3, reruns_delay=5)
     @allure.title("[200]OK - Upload my custom config to the switch")
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
@@ -103,8 +104,9 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
-    @pytest.mark.flaky(reruns=3, reruns_delay=3)
+    # @pytest.mark.skip(reason='Тест ломает коммутатор')
+    @pytest.mark.order("second_to_last")
+    @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title('[412]PRECONDITION_FAILED - Upload my "broken" custom config to the switch')
     @allure.tag(AllureTag.CREATE_ENTITY, AllureTag.NEGATIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.CREATE_ENTITY)
@@ -120,7 +122,7 @@ class TestCustomConfig:
         assert_upload_broken_custom_config(response_text=response_text)
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
+
     @allure.title("[200]OK - Saving actual custom config")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
@@ -150,7 +152,7 @@ class TestCustomConfig:
                              schema=response_data.model_json_schema())
 
 
-    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.custom_config}")
+
     @allure.title("[200]OK - Restore saved custom config")
     @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
     @allure.story(AllureStory.DELETE_ENTITY)
@@ -171,6 +173,39 @@ class TestCustomConfig:
     @allure.severity(AllureSeverity.MAJOR)
     def test_restore_custom_config_by_unauthorised_user(self, unauthorised_custom_config_client: CustomConfigClient):
         response = unauthorised_custom_config_client.restore_custom_config_api()
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+
+
+
+    @allure.title("[200]OK - Return default config")
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.DELETE_ENTITY)
+    @allure.severity(AllureSeverity.BLOCKER)
+    def test_return_default_config(self,
+                                   custom_config_client: CustomConfigClient,
+                                   function_custom_config_tear_down):
+        response = custom_config_client.return_default_config()
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+
+
+    @pytest.mark.xdist_group(name=f"{settings.xdist_group_names.negative_tests}")
+    @allure.title("[403]FORBIDDEN - Return default config by unauthorised user")
+    @allure.tag(AllureTag.DELETE_ENTITY, AllureTag.NEGATIVE_TEST)
+    @allure.story(AllureStory.DELETE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_return_default_config_by_unauthorised_user(self, unauthorised_custom_config_client: CustomConfigClient):
+        response = unauthorised_custom_config_client.return_default_config()
         response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(actual=response.status_code,
