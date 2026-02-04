@@ -14,6 +14,7 @@ class APIRoutes(str, Enum):
     LOOPBACK_PORTS = '/api/loopback_ports/'
     INGRESS_GROUPS = '/api/ingress_groups/'
     NODES = '/api/nodes/'
+    SELECTIONS = '/api/selections/'
 
     def __str__(self):
         return self.value

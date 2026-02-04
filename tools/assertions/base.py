@@ -55,9 +55,28 @@ def assert_equal_in_expected_list(equal: Any, expected_list: Sized, name: str):
     logger.info(f'Check object: "{name}" - equals to one of "{expected_list}"')
     assert equal in expected_list, \
         (
-            f'Incorrect value:  "{name}"'
+            f'Incorrect value: "{name}"'
             f'\nExpected list: "{expected_list}"'
-            f'Equal value:     "{equal}"'
+            f'\nEqual value: "{equal}"'
+        )
+
+
+@allure.step('Check object: {name} with {equal}- not exist in {list}')
+def assert_equal_not_in_list(equal: Any, list: Sized, name: str):
+    """
+    Проверяет, что фактическое значение отсутствует в списке.
+
+    :param name: Название проверяемого значения.
+    :param equal: Проверяемое значение.
+    :param list: Список.
+    :raises AssertionError: Если проверяемое значение есть в списке.
+    """
+    logger.info(f'Check object: "{name}" - equals to one of "{list}"')
+    assert equal not in list, \
+        (
+            f'Equal`s name: "{name}"'
+            f'\nList: "{list}"'
+            f'\nEqual`s value: "{equal}"'
         )
 
 

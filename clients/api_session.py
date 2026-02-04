@@ -6,9 +6,9 @@ from requests import Session, Response
 class APISession:
     def __init__(self, session: Session):
         """
-        Базовый API клиент, принимающий объект httpx.Client.
+        Базовая API сессия, принимающий объект requests.Session.
 
-        :param client: экземпляр httpx.Client для выполнения HTTP-запросов
+        :param session: экземпляр requests.Session для выполнения HTTP-запросов
         """
         self.session = session
 

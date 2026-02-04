@@ -14,4 +14,5 @@ pytest_plugins = (
     'fixtures.loopback_ports',
     'fixtures.ingress_groups',
     'fixtures.nodes',
+    'fixtures.selections',
 )
