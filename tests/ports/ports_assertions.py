@@ -1,10 +1,8 @@
-from typing import List
-
 import allure
 
 from httpx import Response
 from clients.ports.ports_schema import CreatePortRequestSchema, ConfiguredPortSchema, GetPossiblePortsListResponse
-from tools.assertions.base import assert_equal, assert_equal_in_expected_list, assert_equal_in_expected_list_no_logs
+from tools.assertions.base import assert_equal, assert_equal_in_expected_list_no_logs
 from tools.logger import get_logger
 from tests.ports.ports_data import POSSIBLE_PORTS
 

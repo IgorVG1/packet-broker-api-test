@@ -1,15 +1,10 @@
 import allure
 from httpx import Response
-from requests import Response as requests_Response
 from clients.api_client import APIClient
 from clients.api_coverage import tracker
-from clients.api_session import APISession
-from clients.ingress_groups.ingress_groups_schema import CreateIngressGroupRequestSchema, \
-    UpdateIngressGroupRequestSchema, DeleteIngressGroupRequestSchema
 from clients.nodes.nodes_schema import CreateNodesRequestSchema
-from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema, get_private_http_session
-from clients.public_http_builder import get_public_http_client, get_public_http_session
-from config import settings
+from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema
+from clients.public_http_builder import get_public_http_client
 from tools.routes import APIRoutes
 
 # ----------------------------------------------------------------------------------------------------------------------

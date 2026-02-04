@@ -1,19 +1,9 @@
-from typing import Any
-
 import pytest
-from pydantic import BaseModel
 
 from clients.custom_config.custom_config_client import CustomConfigClient
 from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
-from clients.ingress_groups.ingress_groups_client import IngressGroupsClient, IngressGroupsSession, \
-    get_ingress_group_client, get_unauthorised_ingress_group_client, get_ingress_group_session, \
-    get_unauthorised_ingress_group_session
-from clients.ingress_groups.ingress_groups_schema import CreateIngressGroupRequestSchema, \
-    DeleteIngressGroupRequestSchema
 from clients.nodes.nodes_client import NodesClient, get_nodes_client, get_unauthorised_nodes_client
-from clients.nodes.nodes_schema import CreateNodesRequestSchema
 from fixtures.authentication import UserFixture
-from tests.nodes.nodes_data import NODES_CONFIG_JSON
 from tools.logger import get_logger
 
 

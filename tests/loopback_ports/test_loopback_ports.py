@@ -8,8 +8,7 @@ from clients.loopback_ports.loopback_ports_schema import GetLoopbackPortsRespons
     CreateLoopbackPortsRequestSchema, DeleteLoopbackPortsRequestSchema
 from config import settings
 from tests.loopback_ports.loopback_ports_assertions import assert_get_loopback_ports_response, \
-    assert_create_loopback_ports_response, assert_delete_loopback_ports_response, \
-    assert_create_loopback_ports_with_incorrect_body
+    assert_create_loopback_ports_response, assert_delete_loopback_ports_response
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.severity import AllureSeverity

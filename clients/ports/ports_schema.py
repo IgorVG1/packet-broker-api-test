@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import List
 from tools.fakers import fake
 from pydantic import BaseModel, Field, RootModel, ConfigDict
 

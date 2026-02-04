@@ -1,6 +1,5 @@
 from typing import List
 from pydantic import BaseModel, RootModel, ConfigDict, Field
-from tools.fakers import fake
 
 
 class PatternObjectSchema(BaseModel):

@@ -6,7 +6,7 @@ from httpx import Response
 
 from clients.loopback_ports.loopback_ports_schema import GetLoopbackPortsResponseSchema, \
     CreateLoopbackPortsRequestSchema
-from clients.ports.ports_schema import CreatePortRequestSchema, ConfiguredPortSchema, GetPossiblePortsListResponse
+from clients.ports.ports_schema import ConfiguredPortSchema, GetPossiblePortsListResponse
 from tools.assertions.base import assert_equal, assert_equal_in_expected_list_no_logs
 from tools.logger import get_logger
 from tests.ports.ports_data import POSSIBLE_PORTS

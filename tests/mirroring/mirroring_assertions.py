@@ -1,10 +1,7 @@
-from typing import List
 
 import allure
-from httpx import Response
-
-from clients.mirroring.mirroring_schema import GetMirroringResponseSchema, MirroringSchema, \
-    CreateMirroringRequestSchema, UpdateMirroringRequestSchema
+from typing import List
+from clients.mirroring.mirroring_schema import MirroringSchema, CreateMirroringRequestSchema, UpdateMirroringRequestSchema
 from tools.assertions.base import assert_equal, assert_length, assert_equal_in_expected_list
 from tools.logger import get_logger
 

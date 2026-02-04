@@ -2,14 +2,8 @@ import allure, pytest
 
 from http import HTTPStatus
 from clients.errors_schema import AuthenticationErrorResponseSchema
-from clients.ingress_groups.ingress_groups_client import IngressGroupsClient, IngressGroupsSession
-from clients.ingress_groups.ingress_groups_schema import GetIngressGroupsResponseSchema, \
-    CreateIngressGroupRequestSchema, UpdateIngressGroupRequestSchema, DeleteIngressGroupRequestSchema
 from clients.nodes.nodes_client import NodesClient
 from clients.nodes.nodes_schema import CreateNodesRequestSchema
-from fixtures.ingress_groups import IngressGroupFixture
-from tests.ingress_groups.ingress_groups_assertions import assert_create_already_creating_ingress_group_response, \
-    assert_update_nonexistent_ingress_group_response, assert_delete_nonexistent_ingress_group_response
 from tests.nodes.nodes_assertions import assert_apply_invalid_nodes_response
 from tests.nodes.nodes_data import NODES_CONFIG_JSON
 from tools.allure.epics import AllureEpic

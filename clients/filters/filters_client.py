@@ -1,13 +1,10 @@
 import allure
-from typing import List, Any
 from httpx import Response
-from pydantic import BaseModel
 from requests import Response as requests_Response
 from clients.api_client import APIClient
 from clients.api_coverage import tracker
 from clients.api_session import APISession
-from clients.filters.filters_schema import CreateFiltersRequestSchema, DeleteFiltersRequestSchema, CreateFilterSchema, \
-    DeleteFilterSchema
+from clients.filters.filters_schema import DeleteFiltersRequestSchema, CreateFilterSchema
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema, get_private_http_session
 from clients.public_http_builder import get_public_http_client, get_public_http_session
 from config import settings
