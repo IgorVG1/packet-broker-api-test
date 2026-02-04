@@ -13,6 +13,7 @@ class APIRoutes(str, Enum):
     PORTS = '/api/ports/'
     LOOPBACK_PORTS = '/api/loopback_ports/'
     INGRESS_GROUPS = '/api/ingress_groups/'
+    NODES = '/api/nodes/'
 
     def __str__(self):
         return self.value

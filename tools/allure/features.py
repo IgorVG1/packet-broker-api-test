@@ -14,3 +14,4 @@ class AllureFeature(str, Enum):
     PORTS = "PORTS"
     LOOPBACK_PORTS = "LOOPBACK_PORTS"
     INGRESS_GROUPS = "INGRESS_GROUPS"
+    NODES = "NODES"
