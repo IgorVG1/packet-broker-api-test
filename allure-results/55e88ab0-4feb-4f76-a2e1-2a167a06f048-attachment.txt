@@ -1,0 +1,7 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "PUT" request to "http://192.168.7.57/api/balancing/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 412 Precondition Failed from "http://192.168.7.57/api/balancing/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m BALANCING_ASSERTIONS:balancing_assertions.py:70 Check update balancing response without logicId
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "string response" - equals to ""Неправильно задан ID логической группы""

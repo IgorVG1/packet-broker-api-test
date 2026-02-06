@@ -7,8 +7,6 @@ from clients.analysis_ports.analysis_ports_schema import CreateAnalysisPortReque
 from clients.api_client import APIClient
 from clients.api_coverage import tracker
 from clients.api_session import APISession
-from clients.egress_groups.egress_groups_schema import CreateEgressGroupRequestSchema, UpdateEgressGroupRequestSchema, \
-    DeleteEgressGroupRequestSchema
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema, get_private_http_session
 from clients.public_http_builder import get_public_http_client, get_public_http_session
 from config import settings

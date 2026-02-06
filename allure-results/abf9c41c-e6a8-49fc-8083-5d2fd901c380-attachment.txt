@@ -1,0 +1,12 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m LOOPBACK_PORTS_FIXTURE:loopback_ports.py:51 [Tear-down completed] : If speed limits for actual loopback ports existed - now they were deleted.
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/loopback_ports/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/loopback_ports/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "GET" request to "http://192.168.7.57/api/loopback_ports/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/loopback_ports/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "200"
+[32mINFO    [0m LOOPBACK_PORTS_ASSERTIONS:loopback_ports_assertions.py:42 Check create loopback ports speed limits response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "port" - equals to "L1"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "speedLimit" - equals to "10000"
+[32mINFO    [0m LOOPBACK_PORTS_FIXTURE:loopback_ports.py:60 [Tear-down completed] : Changed loopback port was deleted.

@@ -6,17 +6,6 @@ from clients.analysis_ports.analysis_ports_client import AnalysisPortsClient, ge
     get_unauthorised_analysis_ports_session
 from clients.analysis_ports.analysis_ports_schema import CreateAnalysisPortRequestSchema, \
     DeleteAnalysisPortRequestSchema
-from clients.custom_config.custom_config_client import CustomConfigClient
-from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
-from clients.egress_groups.egress_groups_client import EgressGroupsClient, get_egress_groups_client, \
-    get_unauthorised_egress_groups_client, EgressGroupsSession, get_egress_groups_session, \
-    get_unauthorised_egress_groups_session
-from clients.egress_groups.egress_groups_schema import CreateEgressGroupRequestSchema, DeleteEgressGroupRequestSchema
-from clients.ingress_groups.ingress_groups_client import IngressGroupsClient, IngressGroupsSession, \
-    get_ingress_group_client, get_unauthorised_ingress_group_client, get_ingress_group_session, \
-    get_unauthorised_ingress_group_session
-from clients.ingress_groups.ingress_groups_schema import CreateIngressGroupRequestSchema, \
-    DeleteIngressGroupRequestSchema
 from fixtures.authentication import UserFixture
 from tools.logger import get_logger
 
@@ -47,7 +36,7 @@ def unauthorised_analysis_ports_session() -> AnalysisPortsSession:
 
 
 @pytest.fixture(scope='function')
-def function_analysis_port(analysis_ports_client) -> AnalysisPortsFixture:
+def function_analysis_port(analysis_ports_client: AnalysisPortsClient) -> AnalysisPortsFixture:
     """
     Фикстура для предварительного создания порта анализа.
 
@@ -60,7 +49,7 @@ def function_analysis_port(analysis_ports_client) -> AnalysisPortsFixture:
 
 
 @pytest.fixture(scope='function')
-def function_analysis_port_set_up(analysis_ports_session):
+def function_analysis_port_set_up(analysis_ports_session: AnalysisPortsSession):
     """
     Фикстура для удаления имеющегося порта анализа перед запуском теста.
 
@@ -73,7 +62,7 @@ def function_analysis_port_set_up(analysis_ports_session):
 
 
 @pytest.fixture(scope='function')
-def function_analysis_port_tear_down(analysis_ports_session):
+def function_analysis_port_tear_down(analysis_ports_session: AnalysisPortsSession):
     """
     Фикстура для удаления созданного порта анализа по окончании теста.
 

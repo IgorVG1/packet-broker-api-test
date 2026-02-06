@@ -201,7 +201,6 @@ class TestAnalysisPorts:
     @allure.severity(AllureSeverity.BLOCKER)
     def test_delete_analysis_port(self,
                                   function_analysis_port: AnalysisPortsFixture,
-                                  analysis_ports_client: AnalysisPortsClient,
                                   analysis_ports_session: AnalysisPortsSession):
 
         request = DeleteAnalysisPortRequestSchema()

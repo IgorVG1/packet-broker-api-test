@@ -17,6 +17,7 @@ class APIRoutes(str, Enum):
     SELECTIONS = '/api/selections/'
     EGRESS_GROUPS = '/api/egress_groups/'
     ANALYSIS_PORTS = '/api/unknown/'
+    PSF_FORMAT = '/api/psf_format/'
 
     def __str__(self):
         return self.value

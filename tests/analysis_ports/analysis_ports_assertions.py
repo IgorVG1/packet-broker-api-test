@@ -3,9 +3,7 @@ from httpx import Response
 
 from clients.analysis_ports.analysis_ports_schema import CreateAnalysisPortRequestSchema, \
     GetAnalysisPortsResponseSchema, UpdateAnalysisPortRequestSchema
-from clients.egress_groups.egress_groups_schema import GetEgressGroupsResponseSchema, CreateEgressGroupRequestSchema, \
-    UpdateEgressGroupRequestSchema
-from tools.assertions.base import assert_equal, assert_equal_in_expected_list
+from tools.assertions.base import assert_equal
 from tools.logger import get_logger
 
 
