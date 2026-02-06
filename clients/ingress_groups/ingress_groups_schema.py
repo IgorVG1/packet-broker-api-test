@@ -31,7 +31,7 @@ class GetIngressGroupsResponseSchema(RootModel):
     """
     Описание структуры ответа на получение списка входных групп.
     Attributes:
-        root: List[LoopbackPortSchema] - Список loopback портов с ограничениями скоростей.
+        root: List[LoopbackPortSchema] - Список входных групп.
     """
     root: List[IngressGroupSchema]
 

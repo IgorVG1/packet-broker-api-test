@@ -7,7 +7,7 @@
 ### Команда №1 :
 
 ```shell
-pytest -m regression --alluredir=allure-results --numprocesses=2 --dist=loadgroup
+pytest -m regression --alluredir=allure-results
 ```
 
 
@@ -47,3 +47,12 @@ allure serve ./allure-results
 <Ctrl> + <C>
 yes
 ```
+
+### Команда №4 :
+
+```shell
+allure generate ./allure-results --output=./allure-report
+```
+
+###### 1. Генерирует allure-отчет и сохраняет его html-файл в root:
+> ./allure-report/index.html

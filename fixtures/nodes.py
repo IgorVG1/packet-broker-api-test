@@ -43,3 +43,16 @@ def function_node_tear_down(custom_config_client: CustomConfigClient):
     custom_config_client.upload_custom_config_api(request=request)
 
     logger.info('[Tear-down completed] : Test custom config was returned.')
+
+
+@pytest.fixture(scope='function')
+def function_nodes_return_config(custom_config_client: CustomConfigClient):
+    """
+    Фикстура для возврата тестовой конфигурации по окончании теста.
+
+    :param custom_config_client: Фикстура с подготовленной сессией для работы с /api/custom_config/.
+    """
+    request = UploadCustomConfigRequestSchema()
+    custom_config_client.upload_custom_config_api(request=request)
+
+    logger.info('[Tear-down completed] : Test custom config was uploaded.')

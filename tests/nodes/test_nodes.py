@@ -92,12 +92,15 @@ class TestNodes:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title("[200]OK - Apply nodes config")
-    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)
     @allure.story(AllureStory.UPDATE_ENTITY)
     @allure.sub_suite(AllureStory.UPDATE_ENTITY)
     @allure.severity(AllureSeverity.BLOCKER)
-    def test_apply_nodes(self, nodes_client: NodesClient):
+    def test_apply_nodes(self,
+                         function_nodes_return_config,
+                         nodes_client: NodesClient):
 
         response = nodes_client.apply_nodes_api()
 

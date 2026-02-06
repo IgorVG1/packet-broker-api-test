@@ -16,3 +16,4 @@ class AllureFeature(str, Enum):
     INGRESS_GROUPS = "INGRESS_GROUPS"
     NODES = "NODES"
     SELECTIONS = "SELECTIONS"
+    EGRESS_GROUPS = "EGRESS_GROUPS"

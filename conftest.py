@@ -15,4 +15,5 @@ pytest_plugins = (
     'fixtures.ingress_groups',
     'fixtures.nodes',
     'fixtures.selections',
+    'fixtures.egress_groups',
 )
