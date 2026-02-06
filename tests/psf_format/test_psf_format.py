@@ -1,18 +1,10 @@
 import allure, pytest
 
 from http import HTTPStatus
-
-from clients.analysis_ports.analysis_ports_client import AnalysisPortsClient, AnalysisPortsSession
-from clients.analysis_ports.analysis_ports_schema import GetAnalysisPortsResponseSchema, \
-    CreateAnalysisPortRequestSchema, UpdateAnalysisPortRequestSchema, DeleteAnalysisPortRequestSchema
 from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.psf_format.psf_format_client import PsfFormatClient, PsfFormatSession
 from clients.psf_format.psf_format_schema import GetPsfFormatResponseSchema, CreatePsfFormatRequestSchema, \
     UpdatePsfFormatRequestSchema, DeletePsfFormatRequestSchema
-from fixtures.analysis_ports import AnalysisPortsFixture
-from tests.analysis_ports.analysis_ports_assertions import assert_create_analysis_port_response, \
-    assert_create_already_creating_analysis_port_response, assert_update_analysis_port_response, \
-    assert_update_nonexistent_analysis_port_response, assert_delete_nonexistent_analysis_port_response
 from tests.psf_format.psf_format_assertions import assert_create_psf_format_response, \
     assert_create_already_creating_psf_format_response, assert_update_psf_format_response, \
     assert_update_nonexistent_psf_format_response

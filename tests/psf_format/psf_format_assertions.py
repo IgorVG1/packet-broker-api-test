@@ -1,8 +1,6 @@
 import allure
 from httpx import Response
 
-from clients.analysis_ports.analysis_ports_schema import CreateAnalysisPortRequestSchema, \
-    GetAnalysisPortsResponseSchema, UpdateAnalysisPortRequestSchema
 from clients.psf_format.psf_format_schema import GetPsfFormatResponseSchema, CreatePsfFormatRequestSchema, \
     UpdatePsfFormatRequestSchema
 from tools.assertions.base import assert_equal
