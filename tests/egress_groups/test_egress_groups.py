@@ -6,16 +6,10 @@ from clients.egress_groups.egress_groups_client import EgressGroupsClient, Egres
 from clients.egress_groups.egress_groups_schema import GetEgressGroupsResponseSchema, CreateEgressGroupRequestSchema, \
     UpdateEgressGroupRequestSchema, DeleteEgressGroupRequestSchema
 from clients.errors_schema import AuthenticationErrorResponseSchema
-from clients.ingress_groups.ingress_groups_client import IngressGroupsClient, IngressGroupsSession
-from clients.ingress_groups.ingress_groups_schema import GetIngressGroupsResponseSchema, \
-    CreateIngressGroupRequestSchema, UpdateIngressGroupRequestSchema, DeleteIngressGroupRequestSchema
 from fixtures.egress_groups import EgressGroupFixture
-from fixtures.ingress_groups import IngressGroupFixture
 from tests.egress_groups.egress_groups_assertions import assert_create_egress_group_response, \
     assert_create_already_creating_egress_group_response, assert_update_egress_group_response, \
     assert_update_nonexistent_egress_group_response, assert_delete_nonexistent_egress_group_response
-from tests.ingress_groups.ingress_groups_assertions import assert_create_already_creating_ingress_group_response, \
-    assert_update_nonexistent_ingress_group_response, assert_delete_nonexistent_ingress_group_response
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.severity import AllureSeverity

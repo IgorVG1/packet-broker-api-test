@@ -16,6 +16,7 @@ class APIRoutes(str, Enum):
     NODES = '/api/nodes/'
     SELECTIONS = '/api/selections/'
     EGRESS_GROUPS = '/api/egress_groups/'
+    ANALYSIS_PORTS = '/api/unknown/'
 
     def __str__(self):
         return self.value

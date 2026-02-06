@@ -16,4 +16,5 @@ pytest_plugins = (
     'fixtures.nodes',
     'fixtures.selections',
     'fixtures.egress_groups',
+    'fixtures.analysis_ports',
 )

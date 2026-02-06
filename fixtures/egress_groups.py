@@ -7,11 +7,6 @@ from clients.egress_groups.egress_groups_client import EgressGroupsClient, get_e
     get_unauthorised_egress_groups_client, EgressGroupsSession, get_egress_groups_session, \
     get_unauthorised_egress_groups_session
 from clients.egress_groups.egress_groups_schema import CreateEgressGroupRequestSchema, DeleteEgressGroupRequestSchema
-from clients.ingress_groups.ingress_groups_client import IngressGroupsClient, IngressGroupsSession, \
-    get_ingress_group_client, get_unauthorised_ingress_group_client, get_ingress_group_session, \
-    get_unauthorised_ingress_group_session
-from clients.ingress_groups.ingress_groups_schema import CreateIngressGroupRequestSchema, \
-    DeleteIngressGroupRequestSchema
 from fixtures.authentication import UserFixture
 from tools.logger import get_logger
 
