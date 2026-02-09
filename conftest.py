@@ -18,4 +18,5 @@ pytest_plugins = (
     'fixtures.egress_groups',
     'fixtures.analysis_ports',
     'fixtures.psf_format',
+    'fixtures.mirror_filter',
 )

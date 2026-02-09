@@ -1,0 +1,12 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "GET" request to "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "200"
+[32mINFO    [0m PSF_DMAC_ASSERTIONS:psf_format_assertions.py:112 Check create psf dmac response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "dmac" - equals to "aa:bb:cc:dd:ee:ff"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m PSF_DMAC_FIXTURE:psf_format.py:106 [Tear-down completed] : Created psf dmac was cleared.

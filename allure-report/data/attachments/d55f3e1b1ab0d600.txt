@@ -1,0 +1,6 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 403 Forbidden from "http://192.168.7.57/api/psf_dmac/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "403"
+[32mINFO    [0m ERRORS_ASSERTIONS:errors.py:20 Check validation error response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "detail" - equals to "Учетные данные не были предоставлены."
+[32mINFO    [0m SCHEMA_ASSERTIONS:schema.py:20 Validate JSON schema

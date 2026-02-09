@@ -6,7 +6,7 @@ from clients.api_coverage import tracker
 from clients.api_session import APISession
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema, get_private_http_session
 from clients.psf_format.psf_format_schema import CreatePsfFormatRequestSchema, UpdatePsfFormatRequestSchema, \
-    DeletePsfFormatRequestSchema
+    DeletePsfFormatRequestSchema, CreatePsfDmacRequestSchema
 from clients.public_http_builder import get_public_http_client, get_public_http_session
 from config import settings
 from tools.routes import APIRoutes
@@ -15,7 +15,7 @@ from tools.routes import APIRoutes
 
 class PsfFormatClient(APIClient):
     """
-    Клиент для работы с /api/psf_format/
+    Клиент для работы с /api/psf_format/ и /api/psf_dmac/.
     """
 
     @allure.step('Get psf format list')
@@ -54,6 +54,34 @@ class PsfFormatClient(APIClient):
         """
         return self.put(url=f'{APIRoutes.PSF_FORMAT}',
                         json=request.model_dump())
+
+
+
+
+    @allure.step('Get psf dmac')
+    @tracker.track_coverage_httpx(f'{APIRoutes.PSF_DMAC}')
+    def get_psf_dmac_api(self) -> Response:
+        """
+        Метод получения dMAC для формата PSF.
+        При загрузке страницы http://192.168.7.57/psf_format/.
+
+        :return: Ответ от сервера в виде объекта httpx.Response.
+        """
+        return self.get(url=f'{APIRoutes.PSF_DMAC}')
+
+
+    @allure.step('Create psf dmac')
+    @tracker.track_coverage_httpx(f'{APIRoutes.PSF_DMAC}')
+    def create_psf_dmac_api(self, request: CreatePsfDmacRequestSchema) -> Response:
+        """
+        Метод конфигурирования dMAC для формата PSF.
+
+        :return: Ответ от сервера в виде объекта httpx.Response.
+        """
+        return self.post(url=f'{APIRoutes.PSF_DMAC}',
+                         json=request.model_dump())
+
+
 
 
 def get_psf_format_client(user: AuthenticationUserSchema) -> PsfFormatClient:

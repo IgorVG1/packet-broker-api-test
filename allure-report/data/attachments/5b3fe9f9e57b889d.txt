@@ -1,0 +1,10 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/psf_format/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/psf_format/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/psf_format/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 412 Precondition Failed from "http://192.168.7.57/api/psf_format/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m PSF_FORMAT_ASSERTIONS:psf_format_assertions.py:49 Check create already creating psf format response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "text" - equals to ""Данный порт уже используется""
+[32mINFO    [0m PSF_FORMAT_FIXTURE:psf_format.py:73 [Tear-down completed] : Created psf format was deleted.

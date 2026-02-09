@@ -92,6 +92,7 @@ class TestNodes:
                              schema=response_data.model_json_schema())
 
 
+    @pytest.mark.order(1)
     @pytest.mark.flaky(reruns=3, reruns_delay=1)
     @allure.title("[200]OK - Apply nodes config")
     @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST, AllureTag.FLAKY_TEST)

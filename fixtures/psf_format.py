@@ -3,16 +3,22 @@ from pydantic import BaseModel
 
 from clients.psf_format.psf_format_client import PsfFormatClient, get_psf_format_client, \
     get_unauthorized_psf_format_client, get_psf_format_session, PsfFormatSession, get_unauthorized_psf_format_session
-from clients.psf_format.psf_format_schema import CreatePsfFormatRequestSchema, DeletePsfFormatRequestSchema
+from clients.psf_format.psf_format_schema import CreatePsfFormatRequestSchema, DeletePsfFormatRequestSchema, \
+    CreatePsfDmacRequestSchema
 from fixtures.authentication import UserFixture
 from tools.logger import get_logger
 
 
 logger = get_logger('PSF_FORMAT_FIXTURE')
+logger_dmac = get_logger('PSF_DMAC_FIXTURE')
 
 
 class PsfFormatFixture(BaseModel):
     request: CreatePsfFormatRequestSchema
+
+
+class PsfDmacFixture(BaseModel):
+    request: CreatePsfDmacRequestSchema
 
 
 @pytest.fixture(scope='function')
@@ -71,3 +77,30 @@ def function_psf_format_tear_down(psf_format_session: PsfFormatSession):
     psf_format_session.delete_psf_format_api(request=request)
 
     logger.info('[Tear-down completed] : Created psf format was deleted.')
+
+
+@pytest.fixture(scope='function')
+def function_psf_dmac(psf_format_client: PsfFormatClient) -> PsfDmacFixture:
+    """
+    Фикстура для предварительного добавление правила спецформата.
+
+    :param psf_format_client: Фикстура с подготовленным клиентом для работы с /api/psf_dmac/.
+    :return: Pydantic-модель, хранящая в себе информацию о запросе на конфигурирование dMAC для формата PSF.
+    """
+    request = CreatePsfDmacRequestSchema()
+    psf_format_client.create_psf_dmac_api(request=request)
+    return PsfDmacFixture(request=request)
+
+
+@pytest.fixture(scope='function')
+def function_psf_dmac_tear_down(psf_format_client: PsfFormatClient):
+    """
+    Фикстура для сброса конфигурирования dMAC для формата PSF по окончании теста.
+
+    :param psf_format_client: Фикстура с подготовленным клиентом для работы с /api/psf_dmac/.
+    """
+    yield
+    request = CreatePsfDmacRequestSchema(dmac='')
+    psf_format_client.create_psf_dmac_api(request=request)
+
+    logger_dmac.info('[Tear-down completed] : Created psf dmac was cleared.')

@@ -2,12 +2,13 @@ import allure
 from httpx import Response
 
 from clients.psf_format.psf_format_schema import GetPsfFormatResponseSchema, CreatePsfFormatRequestSchema, \
-    UpdatePsfFormatRequestSchema
+    UpdatePsfFormatRequestSchema, GetPsfDmacResponseSchema, CreatePsfDmacRequestSchema
 from tools.assertions.base import assert_equal
 from tools.logger import get_logger
 
 
 logger = get_logger("PSF_FORMAT_ASSERTIONS")
+logger_dmac = get_logger('PSF_DMAC_ASSERTIONS')
 
 
 @allure.step('Check create psf format response')
@@ -93,6 +94,39 @@ def assert_update_nonexistent_psf_format_response(response: Response):
     logger.info('Check update nonexistent psf format response')
 
     expected_value = '"Такого правила не существует"'
+    assert_equal(actual=response.text,
+                 expected=expected_value,
+                 name='text')
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+@allure.step('Check create psf dmac response')
+def assert_create_psf_dmac_response(actual: GetPsfDmacResponseSchema, expected: CreatePsfDmacRequestSchema):
+    """
+    Проверяет, что dMAC для формата PSF действительно сконфигурирован.
+    [200]OK
+
+    :param actual: Фактический результат - актуальный список правил спецформата.
+    :param expected: Ожидаемое значение - добавленное правило спецформата.
+    """
+    logger_dmac.info('Check create psf dmac response')
+
+    assert_equal(actual=actual.dmac,
+                 expected=expected.dmac,
+                 name="dmac")
+
+
+@allure.step('Check error create psf dmac with incorrect body')
+def assert_create_psf_dmac_with_incorrect_body(response: Response):
+    """
+    Проверяет, что в ответе от сервера об ошибке соответствует структуре.
+    [412]PRECONDITION_FAILED - "Не удалось прочитать запрос. Неверно сконфигурирован JSON".
+
+    :param response: Ответ от сервера.
+    """
+    logger_dmac.info('Check error create psf dmac with incorrect body')
+
+    expected_value = '"Не удалось прочитать запрос. Неверно сконфигурирован JSON"'
     assert_equal(actual=response.text,
                  expected=expected_value,
                  name='text')

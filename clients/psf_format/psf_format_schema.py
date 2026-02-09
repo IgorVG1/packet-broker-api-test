@@ -67,3 +67,21 @@ class DeletePsfFormatRequestSchema(RootModel):
     """
 
     root: List[str] = Field(default=['L2'])
+
+
+class GetPsfDmacResponseSchema(BaseModel):
+    """
+    Описание структуры ответа на получение dMAC для формата PSF.
+    Attributes:
+        dmac: str.
+    """
+    dmac: str
+
+
+class CreatePsfDmacRequestSchema(BaseModel):
+    """
+    Описание структуры запроса на конфигурирование dMAC для формата PSF.
+    Attributes:
+        dmac: str.
+    """
+    dmac: str = Field(default='aa:bb:cc:dd:ee:ff')

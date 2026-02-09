@@ -18,6 +18,9 @@ class APIRoutes(str, Enum):
     EGRESS_GROUPS = '/api/egress_groups/'
     ANALYSIS_PORTS = '/api/unknown/'
     PSF_FORMAT = '/api/psf_format/'
+    PSF_DMAC = '/api/psf_dmac/'
+    MIRROR_FILTER = '/api/mirror_filter/'
+    PSF_MIRROR_FILTER = '/api/psf_mirror_filter/'
 
     def __str__(self):
         return self.value
