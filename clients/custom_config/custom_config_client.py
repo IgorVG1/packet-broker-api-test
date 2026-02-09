@@ -76,6 +76,19 @@ class CustomConfigClient(APIClient):
         return self.delete(url=f'{APIRoutes.DEFAULT_CONFIG}')
 
 
+
+
+    @allure.step('Get switch info')
+    @tracker.track_coverage_httpx(f'{APIRoutes.SWITCH_INFO}')
+    def get_switch_info_api(self):
+        """
+        Метод получения системной информации коммутатора.
+
+        :return: Ответ от сервера.
+        """
+        return self.get(url=f'{APIRoutes.SWITCH_INFO}')
+
+
 def get_custom_config_client(user: AuthenticationUserSchema) -> CustomConfigClient:
     """
     Функция создаёт экземпляр CustomConfigClient с уже настроенным HTTP-клиентом.

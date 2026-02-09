@@ -2,7 +2,7 @@ import allure, pytest, time
 
 from http import HTTPStatus
 from clients.custom_config.custom_config_client import CustomConfigClient
-from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema
+from clients.custom_config.custom_config_schema import UploadCustomConfigRequestSchema, GetSwitchInfoResponseSchema
 from clients.errors_schema import AuthenticationErrorResponseSchema
 from config import settings
 from tests.custom_config.custom_config_assertions import assert_download_custom_config_response,\
@@ -203,6 +203,49 @@ class TestCustomConfig:
     @allure.severity(AllureSeverity.MAJOR)
     def test_return_default_config_by_unauthorised_user(self, unauthorised_custom_config_client: CustomConfigClient):
         response = unauthorised_custom_config_client.return_default_config()
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+
+
+
+
+@pytest.mark.switch_info
+@pytest.mark.regression
+@allure.tag(AllureTag.REGRESSION, AllureTag.SWITCH_INFO)
+@allure.epic(AllureEpic.PACKET_BROKER)
+@allure.feature(AllureFeature.SWITCH_INFO)
+@allure.parent_suite(AllureEpic.PACKET_BROKER)
+@allure.suite(AllureFeature.SWITCH_INFO)
+class TestSwitchInfo:
+
+    @allure.title("[200]OK - Get switch info")
+    @allure.tag(AllureTag.GET_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.GET_ENTITY)
+    @allure.sub_suite(AllureStory.GET_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_get_switch_info(self, custom_config_client: CustomConfigClient):
+        response = custom_config_client.get_switch_info_api()
+        response_data = GetSwitchInfoResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+
+
+    @allure.title("[403]FORBIDDEN - Get switch info by unauthorised user")
+    @allure.tag(AllureTag.GET_ENTITY, AllureTag.NEGATIVE_TEST)
+    @allure.story(AllureStory.GET_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MINOR)
+    def test_get_switch_info_by_unauthorised_user(self, unauthorised_custom_config_client: CustomConfigClient):
+        response = unauthorised_custom_config_client.get_switch_info_api()
         response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
 
         assert_status_code(actual=response.status_code,

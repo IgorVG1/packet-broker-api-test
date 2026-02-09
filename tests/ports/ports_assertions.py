@@ -7,6 +7,7 @@ from tools.logger import get_logger
 from tests.ports.ports_data import POSSIBLE_PORTS
 
 logger = get_logger("PORTS_ASSERTIONS")
+logger_port_status = get_logger("PORT_STATUS_ASSERTIONS")
 
 
 @allure.step('Check status created port')
@@ -118,3 +119,19 @@ def assert_possible_ports_list(actual_possible_ports_list: GetPossiblePortsListR
         assert_equal_in_expected_list_no_logs(equal=port,
                                               expected_list=actual_possible_ports_list.root,
                                               name=f'Port {port}')
+
+
+@allure.step('Check invalid update port status response')
+def assert_invalid_update_port_status_response(response: Response):
+    """
+    Проверяет ответ об ошибке обновления статуса порта.
+    [412] Precondition Failed - "Невозможно отключить единственный порт в выходной группе".
+
+    :param response: Ответ от сервера.
+    """
+    logger_port_status.info('Check invalid update port status response')
+
+    expected_text = '"Невозможно отключить единственный порт в выходной группе"'
+    assert_equal(actual=response.text,
+                 expected=expected_text,
+                 name='text')

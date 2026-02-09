@@ -4,12 +4,13 @@ from http import HTTPStatus
 from clients.errors_schema import AuthenticationErrorResponseSchema
 from clients.ports.ports_client import PortsClient, PortsSession
 from clients.ports.ports_schema import CreatePortRequestSchema, ConfiguredPortSchema, CreatePortRequest412Schema, \
-    UpdatedPortSchema, DeletePortsRequestSchema, GetPossiblePortsListResponse
+    UpdatedPortSchema, DeletePortsRequestSchema, GetPossiblePortsListResponse, UpdatePortStatusRequestSchema, \
+    GetAllPortsListResponse
 from config import settings
 from fixtures.ports import PortsFixture
 from tests.ports.ports_assertions import assert_port, assert_create_port_with_incorrect_body, \
     assert_update_nonexistent_port, assert_delete_port_with_incorrect_body, \
-    assert_possible_ports_list
+    assert_possible_ports_list, assert_invalid_update_port_status_response
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.severity import AllureSeverity
@@ -266,3 +267,103 @@ class TestPorts:
                            expected=HTTPStatus.PRECONDITION_FAILED)
 
         assert_delete_port_with_incorrect_body(response=response)
+
+
+
+
+@pytest.mark.port_status
+@pytest.mark.regression
+@allure.tag(AllureTag.REGRESSION, AllureTag.PORT_STATUS)
+@allure.epic(AllureEpic.PACKET_BROKER)
+@allure.feature(AllureFeature.PORT_STATUS)
+@allure.parent_suite(AllureEpic.PACKET_BROKER)
+@allure.suite(AllureFeature.PORT_STATUS)
+class TestPortStatus:
+
+    @allure.title("[200]OK - Update port status")
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.UPDATE_ENTITY)
+    @allure.sub_suite(AllureStory.UPDATE_ENTITY)
+    @allure.severity(AllureSeverity.BLOCKER)
+    def test_update_port_status(self, ports_client: PortsClient):
+        request = UpdatePortStatusRequestSchema()
+        response = ports_client.update_port_status_api(request=request)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+
+    @allure.title("[403]FORBIDDEN - Update port status by unauthorised user")
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
+    @allure.story(AllureStory.UPDATE_ENTITY)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_update_port_status_by_unauthorised_user(self, unauthorised_ports_client: PortsClient):
+        request = UpdatePortStatusRequestSchema()
+        response = unauthorised_ports_client.update_port_status_api(request=request)
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+
+
+    @allure.title("[412]PRECONDITION_FAILED - Invalid update port status")
+    @allure.tag(AllureTag.UPDATE_ENTITY, AllureTag.NEGATIVE_TEST)
+    @allure.story(AllureStory.UPDATE_ENTITY)
+    @allure.sub_suite(AllureStory.UPDATE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_invalid_update_port_status(self, ports_client: PortsClient):
+        request = UpdatePortStatusRequestSchema(port="33/0",
+                                                status=False)
+        response = ports_client.update_port_status_api(request=request)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.PRECONDITION_FAILED)
+
+        assert_invalid_update_port_status_response(response=response)
+
+
+
+
+@pytest.mark.ports_all
+@pytest.mark.regression
+@allure.tag(AllureTag.REGRESSION, AllureTag.PORTS_ALL)
+@allure.epic(AllureEpic.PACKET_BROKER)
+@allure.feature(AllureFeature.PORTS_ALL)
+@allure.parent_suite(AllureEpic.PACKET_BROKER)
+@allure.suite(AllureFeature.PORTS_ALL)
+class TestPortsAll:
+
+    @allure.title("[200]OK - Get all ports list")
+    @allure.tag(AllureTag.GET_ENTITIES, AllureTag.POSITIVE_TEST)
+    @allure.story(AllureStory.GET_ENTITIES)
+    @allure.sub_suite(AllureStory.GET_ENTITIES)
+    @allure.severity(AllureSeverity.BLOCKER)
+    def test_get_all_ports_list(self, ports_client: PortsClient):
+        response = ports_client.get_all_ports_list_api()
+        response_data = GetAllPortsListResponse.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+
+
+    @allure.title("[403]FORBIDDEN - Get all ports list by unauthorised user")
+    @allure.tag(AllureTag.GET_ENTITIES, AllureTag.NEGATIVE_TEST)
+    @allure.story(AllureStory.GET_ENTITIES)
+    @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
+    @allure.severity(AllureSeverity.MAJOR)
+    def test_get_all_ports_list_by_unauthorised_user(self, unauthorised_ports_client: PortsClient):
+        response = unauthorised_ports_client.get_all_ports_list_api()
+        response_data = AuthenticationErrorResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.FORBIDDEN)
+        assert_error_for_not_authenticated_user(response=response_data)
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())

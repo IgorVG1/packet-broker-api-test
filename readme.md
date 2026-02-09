@@ -48,3 +48,32 @@ allure generate ./allure-results --output=./allure-report --clean
 
 ###### 3. Параметр определяет необходимость перезаписи существующей папки отчета
 > --clean
+
+
+
+
+# Запуск одного выбранного теста (без генерации отчета) - например, для отладки.
+
+
+## Команда:
+
+```shell
+pytest -k "test_get_switch_info"
+```
+
+- **test_get_switch_info** - имя теста, как в примере ниже:
+
+```Python
+class TestSwitchInfo:
+
+    def test_get_switch_info(self, custom_config_client: CustomConfigClient):
+        
+        response = custom_config_client.get_switch_info_api()
+        response_data = GetSwitchInfoResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(actual=response.status_code,
+                           expected=HTTPStatus.OK)
+
+        validate_json_schema(instance=response.json(),
+                             schema=response_data.model_json_schema())
+```

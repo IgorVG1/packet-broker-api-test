@@ -4,7 +4,8 @@ from requests import Response as requests_Response
 from clients.api_client import APIClient
 from clients.api_coverage import tracker
 from clients.api_session import APISession
-from clients.ports.ports_schema import CreatePortRequestSchema, DeletePortsRequestSchema, UpdatedPortSchema
+from clients.ports.ports_schema import CreatePortRequestSchema, DeletePortsRequestSchema, UpdatedPortSchema, \
+    UpdatePortStatusRequestSchema
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema, get_private_http_session
 from clients.public_http_builder import get_public_http_client, get_public_http_session
 from config import settings
@@ -64,6 +65,34 @@ class PortsClient(APIClient):
         """
         return self.put(url=f'{APIRoutes.PORTS}',
                         json=[request.model_dump(by_alias=True)])
+
+
+
+
+    @allure.step('Update status port')
+    @tracker.track_coverage_httpx(f'{APIRoutes.PORT_STATUS}')
+    def update_port_status_api(self, request: UpdatePortStatusRequestSchema) -> Response:
+        """
+        Метод изменения состояния порта.
+
+        :param request: Словарь UpdatePortStatusRequestSchema.model_dump(by_alias=True).
+        :return: Ответ от сервера в виде объекта httpx.Response.
+        """
+        return self.put(url=f'{APIRoutes.PORT_STATUS}',
+                        json=request.model_dump())
+
+
+
+
+    @allure.step('Get all ports list')
+    @tracker.track_coverage_httpx(f'{APIRoutes.PORTS_ALL}')
+    def get_all_ports_list_api(self) -> Response:
+        """
+        Метод вывода списка всех доступных портов с информацией о модулях.
+
+        :return: Ответ от сервера в виде объекта httpx.Response.
+        """
+        return self.get(url=f'{APIRoutes.PORTS_ALL}')
 
 
 def get_ports_client(user: AuthenticationUserSchema) -> PortsClient:

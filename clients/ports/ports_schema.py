@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 from tools.fakers import fake
 from pydantic import BaseModel, Field, RootModel, ConfigDict
 
@@ -144,3 +144,90 @@ class DeletePortsRequestSchema(RootModel):
         root: List[str] - Список сконфигурированных портов.
     """
     root: List[str] = Field(default=["1/0"])
+
+
+
+
+class UpdatePortStatusRequestSchema(BaseModel):
+    """
+    Описание структуры запроса на изменение состояния порта.
+    Attributes:
+        port: str
+        status: bool
+    """
+    port: str       = Field(default='1/0')
+    status: bool    = Field(default=False)
+
+
+
+
+class LaneSchema(BaseModel):
+    """
+    Описание структуры pydantic-model линии порта из списка всех доступных портов.
+    Attributes:
+        lane: int
+        status: str
+        speed: str
+        description: str
+        serial_number (serialNumber): str
+        part_number (partNumber): str
+        vendor: str
+        rev: str
+        nominal_bitrate_per_line (nominalBitratePerLine): str
+        oui (OUI): str
+        date: str
+        power_class (powerClass): str
+        media_type (mediaType):str
+    """
+    model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
+
+    lane: int
+    status: bool | None                      = Field(default=None)
+    speed: str | None                       = Field(default=None)
+    description: str | None                 = Field(default=None)
+    serial_number: str | None               = Field(default=None, alias='serialNumber')
+    part_number: str | None                 = Field(default=None, alias='partNumber')
+    vendor: str | None                      = Field(default=None)
+    rev: str | None                         = Field(default=None)
+    nominal_bitrate_per_line: str | None    = Field(default=None, alias='nominalBitratePerLine')
+    oui: str | None                         = Field(default=None, alias='OUI')
+    date: str | None                        = Field(default=None)
+    power_class: str | None                 = Field(default=None, alias='powerClass')
+    media_type:str | None                   = Field(default=None, alias='mediaType')
+
+
+class LevelSchema(BaseModel):
+    """
+    Описание структуры pydantic-model уровня порта из списка всех доступных портов.
+    Attributes:
+        rx_rate: float
+        tx_rate: float
+        bias: float
+    """
+    model_config = ConfigDict(validate_by_alias=True, validate_by_name=True)
+
+    rx_rate: float | None   = Field(default=None)
+    tx_rate: float | None   = Field(default=None)
+    bias: float | None      = Field(default=None)
+
+
+class PortSchema(BaseModel):
+    """
+    Описание структуры pydantic-model порта из списка всех доступных портов.
+    Attributes:
+        port: int
+        lanes: List[LaneSchema]
+        levels: List[LevelSchema]
+    """
+    port: int
+    lanes: List[LaneSchema]
+    levels: List[LevelSchema]
+
+
+class GetAllPortsListResponse(RootModel):
+    """
+    Описание структуры ответа на вывод списка всех доступных портов с информацией о модулях.
+    Attributes:
+        root: List[PortSchema] - Список сконфигурированных портов.
+    """
+    root: List[PortSchema]

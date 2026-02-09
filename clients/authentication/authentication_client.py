@@ -2,7 +2,7 @@ import allure
 from httpx import Response
 from clients.api_client import APIClient
 from clients.authentication.authentication_schema import LoginRequestSchema, LoginResponseSchema, \
-    RefreshRequestSchema, RefreshResponseSchema
+    RefreshRequestSchema
 from clients.public_http_builder import get_public_http_client
 from tools.routes import APIRoutes
 from clients.api_coverage import tracker
@@ -45,16 +45,6 @@ class AuthenticationClient(APIClient):
         """
         return self.post(url=f'{APIRoutes.AUTHENTICATION}/both/',
                          json=request.model_dump())
-
-    def refresh(self, request: RefreshRequestSchema) -> RefreshResponseSchema:
-        """
-        Метод выполняет десериализацию ответа сервера на обновление access_token.
-
-        :param request: Словарь с refresh_token.
-        :return: RefreshResponseSchema: pydantic-model ответа от сервера
-        """
-        response = self.refresh_api(request=request)
-        return RefreshResponseSchema.model_validate_json(response.text)
 
 
 def get_authentication_client() -> AuthenticationClient:

@@ -1,0 +1,1 @@
+{"name":"/api/ports_all/","method":"GET","service":"packet-broker-api-test","status_code":200,"query_parameters":[],"is_request_covered":false,"is_response_covered":true}

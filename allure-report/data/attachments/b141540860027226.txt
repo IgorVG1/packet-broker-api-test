@@ -1,0 +1,10 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/unknown/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/unknown/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/unknown/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 412 Precondition Failed from "http://192.168.7.57/api/unknown/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m ANALYSIS_PORTS_ASSERTIONS:analysis_ports_assertions.py:41 Check create already creating analysis port response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "text" - equals to ""Порт анализа на эту входную группу уже настроен""
+[32mINFO    [0m ANALYSIS_PORTS_FIXTURE:analysis_ports.py:75 [Tear-down completed] : Created analysis port was deleted.

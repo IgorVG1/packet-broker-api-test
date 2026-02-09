@@ -1,0 +1,9 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/custom_config/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 412 Precondition Failed from "http://192.168.7.57/api/custom_config/"
+[32mINFO    [0m MIRROR_FILTER_FIXTURE:mirror_filter.py:49 [Set-up completed] : Test custom config was uploaded.
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "GET" request to "http://192.168.7.57/api/mirror_filter/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/mirror_filter/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "200"
+[32mINFO    [0m SCHEMA_ASSERTIONS:schema.py:20 Validate JSON schema
