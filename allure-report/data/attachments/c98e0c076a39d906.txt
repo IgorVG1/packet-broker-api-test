@@ -1,0 +1,5 @@
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:14 Make "POST" request to "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m HTTP_CLIENT:event_hooks.py:23 Got response 200 OK from "http://192.168.7.57/api/token/access/"
+[32mINFO    [0m BASE_ASSERTIONS:base.py:17 Check response status code equals to "412"
+[32mINFO    [0m EGRESS_GROUPS_ASSERTIONS:egress_groups_assertions.py:101 Check delete nonexistent egress group response
+[32mINFO    [0m BASE_ASSERTIONS:base.py:36 Check object: "text" - equals to ""Выходная группа для этой логической группы не сконфигурированна""
